@@ -1,0 +1,21 @@
+{
+  "name": "app_cberi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/bootstrap": "^5.2.10",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "css-loader": "^7.1.2",
+    "htmx.org": "^1.9.12",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1"
+  }
+}

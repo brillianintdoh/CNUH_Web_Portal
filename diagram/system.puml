@@ -1,0 +1,53 @@
+@startuml System
+title 충북대사범대학부설고등학교 웹포털 사이트 구조
+
+package "웹포털 사이트" {
+    cloud "사용자 인터페이스" as UI {
+        RECTANGLE "HTML"
+        RECTANGLE "CSS"
+        RECTANGLE "TypeScript(JavaScript)"
+        RECTANGLE "Bootstrap"
+        RECTANGLE "htmx"
+    }
+
+    rectangle "백엔드" as Backend {
+        RECTANGLE "Spring Boot" {
+            RECTANGLE "freemarker"
+            RECTANGLE "WebSocket"
+            RECTANGLE "로그인 시스템"
+        }
+    }
+
+    database "데이터베이스" as Database {
+        RECTANGLE "MySQL"
+    }
+
+    rectangle "기타 기술" as OtherTech {
+        RECTANGLE "WebAssembly"
+    }
+}
+
+UI -[#0000FF]-> Backend : 요청
+Backend -[#0000FF]-> Database : 쿼리
+Database -[#0000FF]-> Backend : 결과
+Backend -[#0000FF]-> UI : 응답
+
+UI -[#FF0000]-> Backend : 채팅 요청
+Backend -[#FF0000]-> UI : 채팅 응답
+
+note right of UI
+   사용자 인터페이스는 웹 페이지를 통해 사용자와 상호작용합니다.
+end note
+
+note right of Backend
+   Spring Boot를 사용하여 백엔드를 구축하고, WebSocket을 통해 실시간 채팅을 지원합니다.
+end note
+
+note right of Database
+   MySQL 데이터베이스를 사용하여 사용자 정보와 채팅 데이터를 저장합니다.
+end note
+
+note right of OtherTech
+   WebAssembly를 사용하여 웹 애플리케이션의 성능을 향상시킵니다.
+end note
+@enduml

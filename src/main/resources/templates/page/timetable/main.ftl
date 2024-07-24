@@ -1,0 +1,73 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">7교시 시간표</h2>
+    <table class="table table-bordered timetable-table">
+        <thead class="thead-light">
+            <tr>
+                <th>교시/요일</th>
+                <th>월요일</th>
+                <th>화요일</th>
+                <th>수요일</th>
+                <th>목요일</th>
+                <th>금요일</th>
+            </tr>
+        </thead>
+        <tbody id="timetable">
+            <tr>
+                <th>1교시</th>
+                <td>과목1</td>
+                <td>과목2</td>
+                <td>과목3</td>
+                <td>과목4</td>
+                <td>과목5</td>
+            </tr>
+            <tr>
+                <th>2교시</th>
+                <td>과목1</td>
+                <td>과목2</td>
+                <td>과목3</td>
+                <td>과목4</td>
+                <td>과목5</td>
+            </tr>
+            <tr>
+                <th>3교시</th>
+                <td>과목1</td>
+                <td>과목2</td>
+                <td>과목3</td>
+                <td>과목4</td>
+                <td>과목5</td>
+            </tr>
+            <tr>
+                <th>4교시</th>
+                <td>과목1</td>
+                <td>과목2</td>
+                <td>과목3</td>
+                <td>과목4</td>
+                <td>과목5</td>
+            </tr>
+            <tr>
+                <th>5교시</th>
+                <td>과목1</td>
+                <td>과목2</td>
+                <td>과목3</td>
+                <td>과목4</td>
+                <td>과목5</td>
+            </tr>
+            <tr>
+                <th>6교시</th>
+                <td>과목1</td>
+                <td>과목2</td>
+                <td>과목3</td>
+                <td>과목4</td>
+                <td>과목5</td>
+            </tr>
+            <tr>
+                <th>7교시</th>
+                <td>과목1</td>
+                <td>과목2</td>
+                <td>과목3</td>
+                <td>과목4</td>
+                <td>과목5</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

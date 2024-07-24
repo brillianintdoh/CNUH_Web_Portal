@@ -1,0 +1,10 @@
+html, body {
+    width:100%;
+    height:100%;
+    margin:0;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+}

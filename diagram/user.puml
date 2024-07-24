@@ -1,0 +1,16 @@
+@startuml User
+mainframe 유저
+actor user
+card "메인 페이지" as main
+rectangle "if(토큰 여부)" as toke_is
+collections "메뉴 바" as menu
+
+[user] --> (toke_is) : 접속
+
+toke_is O--> main : O
+[로그인 페이지] <-O toke_is : X
+[회원가입 페이지] <- [로그인 페이지] : "회원가입 버튼을 눌렀을 경우"
+
+main <--> menu : 이동
+menu -> [계정 설정]
+@enduml
