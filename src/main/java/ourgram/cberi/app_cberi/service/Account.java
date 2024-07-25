@@ -58,6 +58,17 @@ public class Account {
 
     @PostMapping("/3")
     public String page_3(Model model, @CookieValue(name="token", required=true) String token) {
+        String id = UserDB.getId(token);
+        List<String> follow_list = new ArrayList<>();
+        List<String> following_list = new ArrayList<>();
+        for(String user_id : get.getFollow(id)) {
+            follow_list.add(dbUser.getUsername(user_id));
+        }
+        for(String user_id : get.getFollowing(id)) {
+            following_list.add(dbUser.getUsername(user_id));
+        }
+        model.addAttribute("follow_list", follow_list);
+        model.addAttribute("following_list", following_list);
         model.addAttribute("page", 3);
         return "page/account/main/3";
     }

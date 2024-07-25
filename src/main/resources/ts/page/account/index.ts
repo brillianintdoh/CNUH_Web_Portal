@@ -27,16 +27,17 @@ export async function account() {
 export async function account_htmx(evt_documnet:HTMLElement) {
     const p = evt_documnet.getAttribute("page");
     var load:HTMLElement = document.body;
-
-    if(p == "1") {
-        await page_1();
-    }else if(p == "2") {
-        await page_2();
-    }else if(p == "3") {
-        page_3();
+    if(p) {
+        if(p == "1") {
+            await page_1();
+        }else if(p == "2") {
+            await page_2();
+        }else if(p == "3") {
+            page_3();
+        }
+        
+        load = document.getElementById("load_"+p) as HTMLElement
+        removeClass(document.body, "load_on");
+        load.style.display = 'none';
     }
-
-    load = document.getElementById("load_"+p) as HTMLElement
-    removeClass(document.body, "load_on");
-    load.style.display = 'none';
 }

@@ -29,36 +29,25 @@
 
         <div id="followingList" class="user-list">
             <h5>팔로잉</h5>
-            <div class="user-item">
-                <img src="https://via.placeholder.com/40" class="profile-pic">
-                <span>사용자1</span>
-            </div>
-            <div class="user-item">
-                <img src="https://via.placeholder.com/40" class="profile-pic">
-                <span>사용자2</span>
-            </div>
-            <div class="user-item">
-                <img src="https://via.placeholder.com/40" class="profile-pic">
-                <span>사용자3</span>
-            </div>
+            <#list following_list as username>
+                <div class="user-item" hx-on:click="show_modal('${username}')">
+                    <img src="/load/profile.png?name=${username}" class="profile-pic">
+                    <span>${username}</span>
+                </div>
+            </#list>
         </div>
 
         <div id="followerList" class="user-list" style="display: none;">
             <h5>팔로워</h5>
-            <div class="user-item">
-                <img src="https://via.placeholder.com/40" class="profile-pic">
-                <span>팔로워1</span>
-            </div>
-            <div class="user-item">
-                <img src="https://via.placeholder.com/40" class="profile-pic">
-                <span>팔로워2</span>
-            </div>
-            <div class="user-item">
-                <img src="https://via.placeholder.com/40" class="profile-pic">
-                <span>팔로워3</span>
-            </div>
+            <#list follow_list as username>
+                <div class="user-item" hx-on:click="show_modal('${username}')">
+                    <img src="/load/profile.png?name=${username}" class="profile-pic">
+                    <span>${username}</span>
+                </div>
+            </#list>
         </div>
     </div>
 </div>
 
+<#include "/page/account/user/modal.html" encoding="UTF-8"/>
 <#include "/page/load.ftl" encoding="UTF-8"/>

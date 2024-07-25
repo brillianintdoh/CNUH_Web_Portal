@@ -33,7 +33,7 @@ public class Login {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(HttpServletRequest req, HttpServletResponse res, @RequestParam(name="username", required=true) String username, @RequestParam(name="password", required=true) String password) {
+    public ResponseEntity<String> login(HttpServletResponse res, @RequestParam(name="username", required=true) String username, @RequestParam(name="password", required=true) String password) {
         String result = "404";
         HttpHeaders head = new HttpHeaders();
         head.add("Content-Type","text/html; charset=UTF-8");

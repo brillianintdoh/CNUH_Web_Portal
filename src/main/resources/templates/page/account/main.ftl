@@ -17,18 +17,18 @@
                 </#if>
                 <div class="hstack gap-2 gap-xl-3 justify-content-center">
                     <div>
-                        <h6 class="mb-0">123</h6>
-                        <small>test</small>
+                        <h6 class="mb-0">게시물</h6>
+                        <small>0</small>
                     </div>
                     <div class="vr"></div>
                     <div>
-                        <h6 class="mb-0">123</h6>
-                        <small>test</small>
+                        <h6 class="mb-0">팔로워</h6>
+                        <small>${follow_count}</small>
                     </div>
                     <div class="vr"></div>
                     <div>
-                        <h6 class="mb-0">123</h6>
-                        <small>test</small>
+                        <h6 class="mb-0">팔로잉</h6>
+                        <small>${following_count}</small>
                     </div>
                 </div>
             </div> 
