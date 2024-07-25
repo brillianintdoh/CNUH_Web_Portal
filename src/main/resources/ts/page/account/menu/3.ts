@@ -28,9 +28,8 @@ export function page_3() {
     });
 
     async function show_modal(username:string) {
-        const document_modal = document.getElementById("profile_modal") as HTMLElement;
-        const modal = new Modal(document_modal);
-        await ajax("POST", "/account/modal", { target: document_modal, values: { username: username } });
+        const modal = new Modal(document.getElementById("profile_modal") as HTMLElement);
+        await ajax("POST", "/account/modal", { target: "#profile_modal_body", values: { username: username } });
         modal.show();
     }
 
