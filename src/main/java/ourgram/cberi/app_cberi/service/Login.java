@@ -86,7 +86,7 @@ public class Login {
         String seat = req.getParameter("seat");
 
         if(password.equalsIgnoreCase(confirm_password) && !grade.equals("null") && !class_nm.equals("null")) {
-            if(get.isUser(username)) {
+            if(!get.isUser(username)) {
                 user.singup(username, password);
                 String id = user.getID(username);
                 edit.setSingup(id, name, grade, class_nm, seat, email);
