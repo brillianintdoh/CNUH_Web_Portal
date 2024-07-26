@@ -4,6 +4,6 @@
             <img src="/load/profile.png?name=${username}" class="profile-pic">
             <span>${username}</span>
         </div>
-        <button class="btn btn-sm btn-primary">팔로우</button>
+        <button class="btn btn-sm btn-primary" hx-post="/service/follow" hx-vals='{"username": "${username}"}' hx-swap="afterend">팔로우</button>
     </div>
 </#list>

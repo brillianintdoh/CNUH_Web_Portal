@@ -77,9 +77,17 @@ public class Menu {
     public String page_4(Model model, @CookieValue(name="token", required=true) String token) {
         String id = UserDB.getId(token);
         List<String> chatList = new ArrayList<>();
-        String[] list = get.getFollow(id);
-        for(String f_id : list) {
-            chatList.add(dbUser.getUsername(f_id));
+        List<String> chatRoomList = new ArrayList<>();
+        for(String room_id : get.getChatRoomList(id)) {
+            String[] list_id = get.getChatList_id(room_id);
+            if(list_id[0].equals(id)) {
+                chatRoomList.add(list_id[1]);
+            }else {
+                chatRoomList.add(list_id[0]);
+            }
+        }
+        for(String user_id : chatRoomList) {
+            chatList.add(dbUser.getUsername(user_id));
         }
         model.addAttribute("chatList", chatList);
         model.addAttribute("page", 4);
