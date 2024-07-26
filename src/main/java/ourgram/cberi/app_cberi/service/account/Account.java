@@ -2,18 +2,18 @@ package ourgram.cberi.app_cberi.service.account;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import ourgram.cberi.app_cberi.security.UserDB;
 import ourgram.cberi.app_cberi.security.db.DBGet;
 import ourgram.cberi.app_cberi.security.db.DBUser;
 
-@RestController
+@Controller
 @RequestMapping("/account")
 public class Account {
     private DBUser user;
@@ -25,7 +25,7 @@ public class Account {
         this.get = get;
     }
     
-    @GetMapping("/")
+    @GetMapping("")
     public String account(Model model, @CookieValue(name="token", required=true) String token) {
         String id = UserDB.getId(token);
         model.addAttribute("follow_count", get.getFollowCount(id));
@@ -52,6 +52,7 @@ public class Account {
 
     @PostMapping("/search")
     public String search(Model model, @CookieValue(name="token", required=true) String token, @RequestParam(name="search_value", required=true) String search_value) {
+        model.addAttribute("user_list", user.searchUsername(search_value));
         return "page/account/user/search";
     }
 }

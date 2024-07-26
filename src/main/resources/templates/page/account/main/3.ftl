@@ -23,7 +23,7 @@
 
     <div class="content">
         <div id="searchArea" style="display: none;">
-            <input type="text" name="search_value" class="form-control mb-3" hx-post="/account/search" hx-trigger="keyup changed delay:1s" placeholder="사용자 검색">
+            <input type="text" name="search_value" class="form-control mb-3" hx-post="/account/search" hx-target="#search_result" hx-trigger="keyup changed delay:1s" placeholder="사용자 검색">
             <div class="user-list" id="search_result"></div>
         </div>
 
