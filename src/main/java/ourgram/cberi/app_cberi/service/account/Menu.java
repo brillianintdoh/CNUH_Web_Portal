@@ -1,4 +1,4 @@
-package ourgram.cberi.app_cberi.service;
+package ourgram.cberi.app_cberi.service.account;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +15,13 @@ import ourgram.cberi.app_cberi.security.UserDB;
 
 @Controller
 @RequestMapping("/menu")
-public class Account {
+public class Menu {
     private DBUser dbUser;
     private ServletData data;
     private DBGet get;
 
     @Autowired
-    public Account(DBUser dbUser, DBGet get, ServletData data) {
+    public Menu(DBUser dbUser, DBGet get, ServletData data) {
         this.get = get;
         this.dbUser = dbUser;
         this.data = data;
