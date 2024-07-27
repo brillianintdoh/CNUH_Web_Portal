@@ -35,7 +35,7 @@
                         <img src="/load/profile.png?name=${username}" class="profile-pic">
                         <span>${username}</span>
                     </div>
-                    <button class="btn btn-sm btn-outline-danger" hx-post="/service/friend/unfollow" hx-swap="afterend">언팔로우</button>
+                    <button class="btn btn-sm btn-outline-danger" hx-post="/service/friend/unfollow" hx-vals='{"username": "${username}"}' hx-swap="afterend">언팔로우</button>
                 </div>
             </#list>
         </div>

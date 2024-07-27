@@ -51,7 +51,7 @@ public class Follow {
         String id = UserDB.getId(token);
         String follow_id = user.getID(username);
 
-        if(get.isFollow(id, follow_id) && id.equals(follow_id)) {
+        if(get.isFollow(id, follow_id) && !id.equals(follow_id)) {
             edit.popFollow(id, follow_id);
             result = "<script>alert('언팔로우 성공'); location.reload()</script>";
         }
