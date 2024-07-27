@@ -15,7 +15,7 @@ import ourgram.cberi.app_cberi.security.db.DBGet;
 import ourgram.cberi.app_cberi.security.db.DBUser;
 
 @RestController
-@RequestMapping("/service")
+@RequestMapping("/service/friend")
 public class Follow {
     private DBEdit edit;
     private DBUser user;
@@ -39,6 +39,21 @@ public class Follow {
         if(!get.isFollow(id, follow_id) && !id.equals(follow_id)) {
             edit.setFollow(id, follow_id);
             result = "<script>alert('팔로우 성공'); location.reload()</script>";
+        }
+        return new ResponseEntity<>(result, head, HttpStatus.OK);
+    }
+
+    @PostMapping("/unfollow")
+    public ResponseEntity<String> unfollow(@CookieValue(name="token", required=true) String token, @RequestParam(name="username", required=true) String username) {
+        String result = "<script>alert('(에러) 언팔로우 실패')</script>";
+        HttpHeaders head = new HttpHeaders();
+        head.add("Content-Type", "text/html; charset=UTF-8");
+        String id = UserDB.getId(token);
+        String follow_id = user.getID(username);
+
+        if(get.isFollow(id, follow_id) && id.equals(follow_id)) {
+            edit.popFollow(id, follow_id);
+            result = "<script>alert('언팔로우 성공'); location.reload()</script>";
         }
         return new ResponseEntity<>(result, head, HttpStatus.OK);
     }

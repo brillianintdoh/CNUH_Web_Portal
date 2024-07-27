@@ -30,9 +30,12 @@
         <div id="followingList" class="user-list">
             <h5>팔로잉</h5>
             <#list following_list as username>
-                <div class="user-item" hx-on:click="show_modal('${username}')">
-                    <img src="/load/profile.png?name=${username}" class="profile-pic">
-                    <span>${username}</span>
+                <div class="user-item">
+                    <div class="user-info" hx-on:click="show_modal('${username}')">
+                        <img src="/load/profile.png?name=${username}" class="profile-pic">
+                        <span>${username}</span>
+                    </div>
+                    <button class="btn btn-sm btn-outline-danger" hx-post="/service/friend/unfollow" hx-swap="afterend">언팔로우</button>
                 </div>
             </#list>
         </div>
@@ -40,9 +43,12 @@
         <div id="followerList" class="user-list" style="display: none;">
             <h5>팔로워</h5>
             <#list follow_list as username>
-                <div class="user-item" hx-on:click="show_modal('${username}')">
-                    <img src="/load/profile.png?name=${username}" class="profile-pic">
-                    <span>${username}</span>
+                <div class="user-item">
+                    <div class="user-info" hx-on:click="show_modal('${username}')"> 
+                        <img src="/load/profile.png?name=${username}" class="profile-pic">
+                        <span>${username}</span>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary">삭제</button>
                 </div>
             </#list>
         </div>

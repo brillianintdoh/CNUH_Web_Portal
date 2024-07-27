@@ -69,7 +69,7 @@ body::-webkit-scrollbar {
   border-bottom: 1px solid #efefef;
   display: flex;
   align-items: center;
-  cursor: pointer;
+  justify-content: space-between;
 }
 
 .user-item:last-child {
@@ -82,4 +82,10 @@ body::-webkit-scrollbar {
   border-radius: 50%;
   margin-right: 10px;
   object-fit: cover;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 }
