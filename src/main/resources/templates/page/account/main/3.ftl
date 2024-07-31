@@ -23,7 +23,7 @@
 
     <div class="content">
         <div id="searchArea" style="display: none;">
-            <input type="text" name="search_value" class="form-control mb-3" hx-post="/account/search" hx-target="#search_result" hx-trigger="keyup changed delay:1s" placeholder="사용자 검색">
+            <input type="text" name="search_value" class="form-control mb-3" hx-post="/account/search" hx-target="#search_result" hx-trigger="keyup changed delay:0.5s" placeholder="사용자 검색">
             <div class="user-list" id="search_result"></div>
         </div>
 
@@ -48,7 +48,7 @@
                         <img src="/load/profile.png?name=${username}" class="profile-pic">
                         <span>${username}</span>
                     </div>
-                    <button class="btn btn-sm btn-outline-secondary">삭제</button>
+                    <button class="btn btn-sm btn-outline-secondary" hx-post="/service/friend/delete" hx-vals='{"username": "${username}"}' hx-swap="afterend">삭제</button>
                 </div>
             </#list>
         </div>
