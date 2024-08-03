@@ -55,5 +55,8 @@
 
         <div id="page_5" page="5" style="display:none;">
         </div>
+
+        <div id="page_admin" page="admin" style="display:none;">
+        </div>
     </div>
 </div>

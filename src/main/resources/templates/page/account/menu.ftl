@@ -62,7 +62,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2 btn_a" href="#">
+                        <a class="nav-link d-flex align-items-center gap-2 btn_a" page="admin" hx-on:click="menu(event)" hx-post="/menu/admin" hx-trigger="click once" hx-target="#page_admin">
                             <i class="bi bi-person-vcard"></i>
                             계정 리스트
                         </a>

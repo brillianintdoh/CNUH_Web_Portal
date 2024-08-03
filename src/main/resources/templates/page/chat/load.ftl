@@ -15,9 +15,9 @@
             <div class="message-wrapper">
                 <#if me[0] == chat.sender_id?string>
                     <span class="message-time">${chat.time_at}</span>
-                    <div class="message message-${mess_class}">${chat.content?html}</div>
+                    <pre class="message message-${mess_class}">${chat.content?html}</pre>
                 <#else>
-                    <div class="message message-${mess_class}">${chat.content?html}</div>
+                    <pre class="message message-${mess_class}">${chat.content?html}</pre>
                     <span class="message-time">${chat.time_at}</span>
                 </#if>
             </div>

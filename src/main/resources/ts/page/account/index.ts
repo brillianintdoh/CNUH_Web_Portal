@@ -2,6 +2,7 @@ import { removeClass, toggleClass } from "htmx.org";
 import { page_1 } from "./menu/1";
 import { page_2 } from "./menu/2";
 import { page_3 } from "./menu/3";
+import { admin } from "./menu/admin";
 var page_now:HTMLElement;
 
 export async function account() {
@@ -34,6 +35,8 @@ export async function account_htmx(evt_documnet:HTMLElement) {
             await page_2();
         }else if(p == "3") {
             page_3();
+        }else if(p == "admin") {
+            admin();
         }
         
         load = document.getElementById("load_"+p) as HTMLElement

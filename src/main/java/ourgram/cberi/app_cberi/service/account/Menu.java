@@ -2,6 +2,8 @@ package ourgram.cberi.app_cberi.service.account;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,21 +18,21 @@ import ourgram.cberi.app_cberi.security.UserDB;
 @Controller
 @RequestMapping("/menu")
 public class Menu {
-    private DBUser dbUser;
+    private DBUser user;
     private ServletData data;
     private DBGet get;
 
     @Autowired
-    public Menu(DBUser dbUser, DBGet get, ServletData data) {
+    public Menu(DBUser user, DBGet get, ServletData data) {
         this.get = get;
-        this.dbUser = dbUser;
+        this.user = user;
         this.data = data;
     }
 
     @PostMapping("/1")
     public String page_1(Model model, @CookieValue(name="token", required=true) String token) {
         String id = UserDB.getId(token);
-        model.addAttribute("username", dbUser.getUsername(id));
+        model.addAttribute("username", user.getUsername(id));
         model.addAttribute("name", get.getname(id));
         model.addAttribute("teacher", get.isTeacher(id));
         model.addAttribute("dropdown", new String[]{"a","b","c","d"});
@@ -62,10 +64,10 @@ public class Menu {
         List<String> follow_list = new ArrayList<>();
         List<String> following_list = new ArrayList<>();
         for(String user_id : get.getFollow(id)) {
-            follow_list.add(dbUser.getUsername(user_id));
+            follow_list.add(user.getUsername(user_id));
         }
         for(String user_id : get.getFollowing(id)) {
-            following_list.add(dbUser.getUsername(user_id));
+            following_list.add(user.getUsername(user_id));
         }
         model.addAttribute("follow_list", follow_list);
         model.addAttribute("following_list", following_list);
@@ -87,7 +89,7 @@ public class Menu {
             }
         }
         for(String user_id : chatRoomList) {
-            chatList.add(dbUser.getUsername(user_id));
+            chatList.add(user.getUsername(user_id));
         }
         model.addAttribute("chatList", chatList);
         model.addAttribute("page", 4);
@@ -99,12 +101,29 @@ public class Menu {
         String id = UserDB.getId(token);
         model.addAttribute("page", 5);
 
-        model.addAttribute("username", dbUser.getUsername(id));
+        model.addAttribute("username", user.getUsername(id));
         model.addAttribute("name", get.getname(id));
         model.addAttribute("email", get.getEmail(id));
         model.addAttribute("grade", get.getGrade(id));
         model.addAttribute("class_nm", get.getClassNm(id));
         model.addAttribute("seat", get.getSeat(id));
         return "page/account/main/5";
+    }
+
+    @PostMapping("/admin")
+    public String page_admin(Model model, @CookieValue(name="token", required=true) String token) {
+        String id = UserDB.getId(token);
+        if(!get.isManager(id)) {
+            return "error";
+        }
+
+        List<Map<String, String>> user_list = new ArrayList<>();
+        for(String user_id : user.allID()) {
+            String username = user.getUsername(user_id);
+            user_list.add(Map.of("id", user.getID(username), "username", username, "name", get.getname(user_id), "email", get.getEmail(user_id)));
+        }
+        model.addAttribute("user_list", user_list);
+        model.addAttribute("page", "admin");
+        return "/page/account/admin/index";
     }
 }
