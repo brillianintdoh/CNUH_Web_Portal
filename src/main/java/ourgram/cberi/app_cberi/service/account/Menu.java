@@ -126,4 +126,14 @@ public class Menu {
         model.addAttribute("page", "admin");
         return "/page/account/admin/index";
     }
+
+    @PostMapping("/teacher")
+    public String page_teacher(Model model, @CookieValue(name="token", required=true) String token) {
+        String id = UserDB.getId(token);
+        if(!get.isManager(id)) {
+            return "error";
+        }
+        model.addAttribute("page", "teacher");
+        return "/page/account/admin/teacher";
+    }
 }

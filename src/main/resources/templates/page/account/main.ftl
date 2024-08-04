@@ -58,5 +58,8 @@
 
         <div id="page_admin" page="admin" style="display:none;">
         </div>
+
+        <div id="page_teacher" page="teacher" style="display:none;">
+        </div>
     </div>
 </div>

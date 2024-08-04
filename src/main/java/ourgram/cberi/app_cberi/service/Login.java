@@ -95,4 +95,26 @@ public class Login {
         }
         return new ResponseEntity<>(result, head, HttpStatus.OK);
     }
+
+    @PostMapping("/teacher/signup")
+    public ResponseEntity<String> teacher(HttpServletRequest req, @CookieValue(name="token", required=true) String token) {
+        String result = "<script>alert('가입 실패 (에러)')</script>";
+        String id = UserDB.getId(token);
+        HttpHeaders head = new HttpHeaders();
+        head.add("Content-Type","text/html; charset=UTF-8");
+        if(get.isManager(id)) {
+            String username = req.getParameter("username");
+            String password = req.getParameter("password");
+            String name = req.getParameter("name");
+            String email = req.getParameter("email");
+
+            if(!get.isUser(username)) {
+                user.singup(username, password);
+                String teacher_id = user.getID(username);
+                edit.setTeacher(teacher_id, name, email);
+                result = "<script>alert('가입 성공'); location.replace('/');</script>";
+            }
+        }
+        return new ResponseEntity<>(result, head, HttpStatus.OK);
+    }
 }

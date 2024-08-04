@@ -56,7 +56,7 @@
                 </h6>
                 <ul class="nav flex-column mb-auto">
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2 btn_a" href="#">
+                        <a class="nav-link d-flex align-items-center gap-2 btn_a" page="teacher" hx-on:click="menu(event)" hx-post="/menu/teacher" hx-trigger="click once" hx-target="#page_teacher">
                             <i class="bi bi-person-add"></i>
                             선생님 계정 추가
                         </a>
