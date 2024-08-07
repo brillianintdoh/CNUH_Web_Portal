@@ -112,7 +112,7 @@ public class Login {
                 user.singup(username, password);
                 String teacher_id = user.getID(username);
                 edit.setTeacher(teacher_id, name, email);
-                result = "<script>alert('가입 성공'); location.replace('/');</script>";
+                result = "<script>alert('가입 성공'); location.reload();</script>";
             }
         }
         return new ResponseEntity<>(result, head, HttpStatus.OK);
