@@ -1,0 +1,83 @@
+body {
+    padding-top: 56px;
+}
+
+.sub_menu {
+    position: relative;
+    z-index: 2;
+    height: 2.75rem;
+    overflow-y: hidden;
+}
+
+.sub_menu .nav {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-bottom: 1rem;
+    margin-top: -1px;
+    overflow-x: auto;
+    text-align: center;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+
+.sub_menu .nav-link {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    font-size: .875rem;
+    color: #6c757d;
+}
+
+.sub_menu .nav-link:hover {
+    color: #007bff;
+}
+
+.bd-mode-toggle {
+    z-index: 1500;
+}
+
+.bd-mode-toggle .dropdown-menu .active .bi {
+    display: block !important;
+}
+
+.btn-bd-primary {
+    --bd-violet-bg: #712cf9;
+    --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+    
+    --bs-btn-font-weight: 600;
+    --bs-btn-color: var(--bs-white);
+    --bs-btn-bg: var(--bd-violet-bg);
+    --bs-btn-border-color: var(--bd-violet-bg);
+    --bs-btn-hover-color: var(--bs-white);
+    --bs-btn-hover-bg: #6528e0;
+    --bs-btn-hover-border-color: #6528e0;
+    --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+    --bs-btn-active-color: var(--bs-btn-hover-color);
+    --bs-btn-active-bg: #5a23c8;
+    --bs-btn-active-border-color: #5a23c8;
+}
+
+.menu {
+    width: 1em;
+    height: 1em;
+}
+
+@media (max-width: 991.98px) {
+    .menu {
+        position: fixed;
+        top: 56px;
+        bottom: 0;
+        left: 100%;
+        width: 100%;
+        height: 100%;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        overflow-y: auto;
+        visibility: hidden;
+        background-color: #343a40;
+        transition: transform .3s ease-in-out, visibility .3s ease-in-out;
+    }
+    .menu.open {
+        visibility: visible;
+        transform: translateX(-100%);
+    }
+}

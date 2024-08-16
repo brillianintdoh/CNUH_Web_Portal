@@ -1,10 +1,12 @@
 import "./htmx.js";
 import "htmx.org/dist/ext/ws";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { removeClass } from "htmx.org";
 import { account, account_htmx } from "./page/account";
 import { login, login_htmx } from "./page/login";
 import { timetable } from "./page/timetable";
 import { chat, chat_htmx } from "./page/chat";
+import { community } from "./page/community";
 interface EmscriptenModule {
     cwrap: (name: string, returnType: string | null, argTypes: string[]) => (...args: any[]) => any;
     onRuntimeInitialized: () => void;
@@ -15,6 +17,7 @@ const login_page = document.getElementById("login_page") as HTMLElement;
 const account_page = document.getElementById("account_page") as HTMLElement;
 const timetable_page = document.getElementById("timetable_page") as HTMLElement;
 const chat_page = document.getElementById("chat_page") as HTMLElement;
+const community_page = document.getElementById("community_page") as HTMLElement;
 const load = document.querySelector(".load_menu") as HTMLElement;
 
 var load_is = true;
@@ -28,6 +31,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         load_is = false;
     }else if(chat_page) {
         chat();
+    }else if(community_page) {
+        community();
     }
 
     if(plugin_on) {
