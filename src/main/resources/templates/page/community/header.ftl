@@ -21,15 +21,17 @@
         <div class="navbar-collapse menu" id="collapse_menu">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">공지</a>
+                    <a class="nav-link" href="">공지</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">익명게시판</a>
+                    <a class="nav-link" href="">익명게시판</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" aria-expanded="false">주제 게시판</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">null</a></li>
+                        <#list topic as value>
+                            <li><a class="dropdown-item" href="/community/topic/${value['id']}">${value['title']}</a></li>
+                        </#list>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -48,8 +50,8 @@
 
 <div class="sub_menu bg-body shadow-sm">
     <nav class="nav">
-        <a class="nav-link">홈</a>
-        <a class="nav-link">
+        <a class="nav-link" href="">홈</a>
+        <a class="nav-link" href="">
             새 글
             <span class="badge text-bg-light rounded-pill align-text-bottom">27</span>
         </a>

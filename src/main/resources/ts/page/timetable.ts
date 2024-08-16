@@ -17,7 +17,7 @@ export async function timetable() {
     const body = new URLSearchParams();
     body.append("grade", grade);
 
-    const sem = (new Date().getMonth() <= 7) ? "1" : "2";
+    const sem = (new Date().getMonth()+1 <= 7) ? "1" : "2";
     body.append("sem", sem);
     const post = await fetch("/service/timetable", {
         method:"POST",

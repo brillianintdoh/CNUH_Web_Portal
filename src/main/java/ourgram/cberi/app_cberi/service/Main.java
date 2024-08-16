@@ -43,9 +43,4 @@ public class Main {
         model.addAttribute("grade", get.getGrade(id));
         return "page/timetable/index";
     }
-
-    @GetMapping("/community")
-    public String community(Model model, @CookieValue(name="token", required=true) String token) {
-        return "page/community/index";
-    }
 }

@@ -56,11 +56,6 @@ body {
     --bs-btn-active-border-color: #5a23c8;
 }
 
-.menu {
-    width: 1em;
-    height: 1em;
-}
-
 @media (max-width: 991.98px) {
     .menu {
         position: fixed;
