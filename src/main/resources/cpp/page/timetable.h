@@ -3,7 +3,6 @@
 #include<emscripten/val.h>
 #include<iostream>
 #include<utility>
-#include<stdlib.h>
 using namespace std;
 
 typedef struct NODE {
