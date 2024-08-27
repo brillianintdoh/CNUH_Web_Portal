@@ -44,34 +44,33 @@
     - `timetable.ts`에서 실시간 시간표 값을 json 형태로 받아오고 정보가 있는 row 배열을 `forEach`으로 모든 값을 돌려봅니다
     - row 값에 과목명을 c++에 `time_check` 라는 함수에 파리미터로 보냅니다
     - 그 후 아래 작업을 반복한후 `getTimetable`를 호출해 시간표를 가져옵니다
-    ```cpp
-    if(default_time[itrt].compare("1") == 0) { // 필수 과목이고
-        if(CLASS_TIME == class_nm) { // 자신의 반 수업이면 추가
-            time_table[y][x] = "<td>"+row["ITRT_CNTNT"].as<string>()+"</td>";
-            return; // 리턴
-        } 
+```cpp
+if(default_time[itrt].compare("1") == 0) { // 필수 과목이고
+    if(CLASS_TIME == class_nm) { // 자신의 반 수업이면 추가
+        time_table[y][x] = "<td>"+row["ITRT_CNTNT"].as<string>()+"</td>";
+        return; // 리턴
+    } 
+}
+if(CLASS_TIME == "1") { // 1반을 기준으로 잡는다
+    int index = sub_find(itrt); // 1반의 과목의 디폴트 선택과목들인지 확인한다 (고전 읽기: A, 한문:B, 지구과학:C, 세계사:D) 를 기준
+    if(index != -1) {
+        checkTable[index] = "null"; // 삭제
+        next = add(check_abc[itrt], x,y); // 현재 x,y 좌표가 A,B,C,D 과목 중 하나라면 그 위치를 이중연결리스트에 저장합니다
     }
+}
 
-    if(CLASS_TIME == "1") { // 1반을 기준으로 잡는다
-        int index = sub_find(itrt); // 1반의 과목의 디폴트 선택과목들인지 확인한다 (고전 읽기: A, 한문:B, 지구과학:C, 세계사:D) 를 기준
-        if(index != -1) {
-            checkTable[index] = "null"; // 삭제
-            next = add(check_abc[itrt], x,y); // 현재 x,y 좌표가 A,B,C,D 과목 중 하나라면 그 위치를 이중연결리스트에 저장합니다
+if(my_time.find(itrt) != my_time.end()) { // 과목명이 자신의 선택과목인지 확인합니다
+    string check = my_time[itrt]; // 맞다면 그 과목의 알파벳을 가져옵니다
+    string first_class_nm = first.call<val>("get", check)["class_nm"].as<string>(); // 과목 수업 위치를 가져옵니다
+    if(atoi(CLASS_TIME.c_str()) == 0) CLASS_TIME = "null"; // 1~6반이 아니라면 값을 문자열 "null"로 바꿉니다
+
+    if(CLASS_TIME == first_class_nm) { // 수업 위치가 같다면
+        if(node_find(check)) { // 리스트에서 그 과목이 없다면 0(false)를 리턴하고 만약 있다면 xyz 변수에 좌표를 저장한후 1(true)를 리턴합니다
+            time_table[xyz[check].second][xyz[check].first] = "<td>"+row["ITRT_CNTNT"].as<string>()+"</td>";
         }
     }
-
-    if(my_time.find(itrt) != my_time.end()) { // 과목명이 자신의 선택과목인지 확인합니다
-        string check = my_time[itrt]; // 맞다면 그 과목의 알파벳을 가져옵니다
-        string first_class_nm = first.call<val>("get", check)["class_nm"].as<string>(); // 과목 수업 위치를 가져옵니다
-        if(atoi(CLASS_TIME.c_str()) == 0) CLASS_TIME = "null"; // 1~6반이 아니라면 값을 문자열 "null"로 바꿉니다
-
-        if(CLASS_TIME == first_class_nm) { // 수업 위치가 같다면
-            if(node_find(check)) { // 리스트에서 그 과목이 없다면 0(false)를 리턴하고 만약 있다면 xyz 변수에 좌표를 저장한후 1(true)를 리턴합니다
-                time_table[xyz[check].second][xyz[check].first] = "<td>"+row["ITRT_CNTNT"].as<string>()+"</td>";
-            }
-        }
-    }
-    ```
+}
+```
 <hr>
 <br>
 
