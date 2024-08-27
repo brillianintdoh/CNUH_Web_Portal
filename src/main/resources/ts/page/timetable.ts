@@ -57,7 +57,6 @@ export async function timetable() {
         const day = row.ALL_TI_YMD.substring(6, 8);
         const date = new Date(year + "-" + month + "-" + day);
 
-        console.log(itrt, date.getDay(), perio-1);
         assembly.time_check(itrt, date.getDay(), perio-1);
     });
     (document.getElementById("timetable") as HTMLElement).innerHTML = assembly.getTimetable();
