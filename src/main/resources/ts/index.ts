@@ -19,9 +19,38 @@ const timetable_page = document.getElementById("timetable_page") as HTMLElement;
 const chat_page = document.getElementById("chat_page") as HTMLElement;
 const community_page = document.getElementById("community_page") as HTMLElement;
 const load = document.querySelector(".load_menu") as HTMLElement;
+class Assembly {
+    init!: () => void;
+    time_check!: (itrt:string, x:number, y:number) => boolean;
+    getTimetable!: () => string;
+
+    push(fun:Function, funName:string) {
+        if(funName == "init") {
+            this.init = fun as () => void;
+        }else if(funName == "time_check") {
+            this.time_check = fun as (itrt:string, x:number, y:number) => boolean;
+        }else if(funName == "getTimetable") {
+            this.getTimetable = fun as () => string;
+        }
+    }
+};
+export const assembly = new Assembly();
+
+document.addEventListener("DOMContentLoaded", () => {
+    if(plugin_on) {
+        Module.onRuntimeInitialized = () => {
+            assembly.push(Module.cwrap("init", "void", []), "init");
+            assembly.push(Module.cwrap("time_check", "boolean", ["string", "number", "number"]), "time_check");
+            assembly.push(Module.cwrap("getTimetable", "string", []), "getTimetable");
+            DOM_load();
+        }
+    }else {
+        DOM_load();
+    }
+});
 
 var load_is = true;
-document.addEventListener("DOMContentLoaded", async () => {
+async function DOM_load() {
     if(login_page) {
         await login();
     }else if(timetable_page) {
@@ -35,16 +64,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         community();
     }
 
-    if(plugin_on) {
-        Module.onRuntimeInitialized = () => {
-        }
-    }
-
     if(load && load_is) {
         removeClass(document.body, "load_on");
         load.style.display = 'none';
     }
-});
+}
 
 document.addEventListener("htmx:afterSettle", (evt:any) => {
     const evt_documnet = evt.detail.elt as HTMLElement;

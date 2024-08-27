@@ -22,6 +22,7 @@
             window.grade = "${grade}";
             window.class_nm = "${class_nm}"
         </script>
+        <script src="/plugin/index.js" id="plugin_on"></script>
         <script src="/js/index.js"></script>
     </body>
 </html>

@@ -1,5 +1,5 @@
 import { SchoolTime, Time_Error } from "../../timetable";
-const exception = ["진로활동", "동아리활동","자율활동"];
+const exception = ["진로활동", "동아리활동", "자율활동", "수학", "문학","독서","영어", "스포츠 생활"]
 
 export async function page_1() {
     const a = document.getElementsByName("a").item(0) as HTMLInputElement;
@@ -59,7 +59,7 @@ async function timetable_list() {
     }
     
     json.hisTimetable[1].row.forEach((row) => {
-        const list = row.ITRT_CNTNT.replace("Ⅰ", "");
+        const list = row.ITRT_CNTNT.replace("Ⅰ", "").replace("Ⅱ", "");
         if(list && !itrt.includes(list) && !exception.includes(list)) {
             itrt.push(list);
         }

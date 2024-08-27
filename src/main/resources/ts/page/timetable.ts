@@ -1,16 +1,6 @@
-var time_table:string[][] = [
-    ["<tr><th>1교시</th>","<th></th>","<th></th>","<th></th>","<th></th>","<th></th>"],
-    ["<tr><th>2교시</th>","<th></th>","<th></th>","<th></th>","<th></th>","<th></th>"],
-    ["<tr><th>3교시</th>","<th></th>","<th></th>","<th></th>","<th></th>","<th></th>"],
-    ["<tr><th>4교시</th>","<th></th>","<th></th>","<th></th>","<th></th>","<th></th>"],
-    ["<tr><th>5교시</th>","<th></th>","<th></th>","<th></th>","<th></th>","<th></th>"],
-    ["<tr><th>6교시</th>","<th></th>","<th></th>","<th></th>","<th></th>","<th></th>"],
-    ["<tr><th>7교시</th>","<th>창체</th>","<th></th>","<th></th>","<th></th>","<th></th>","</tr>"]
-];
-const first = new Map<string,string>();
-const default_first = ["수학","문학","영어","동아리활동","진로활동","스포츠 생활"];
+import { assembly } from "..";
+const first = new Map<string,{ itrt:string, class_nm:string }>();
 const check = ["1","2","3","4","5","6","null"];
-const class_nm = (window as any).class_nm;
 const grade = (window as any).grade as string;
 
 export async function timetable() {
@@ -30,10 +20,16 @@ export async function timetable() {
     const B = ((window as any).B as string).split(",");
     const C = ((window as any).C as string).split(",");
     const D = ((window as any).D as string).split(",");
-    first.set(A[0], A[1]);
-    first.set(B[0], B[1]);
-    first.set(C[0], C[1]);
-    first.set(D[0], D[1]);
+    (window as any).A = A[0];
+    (window as any).B = B[0];
+    (window as any).C = C[0];
+    (window as any).D = D[0];
+
+    first.set("A", { itrt:A[0], class_nm:A[1].toString() });
+    first.set("B", { itrt:B[0], class_nm:B[1].toString() });
+    first.set("C", { itrt:C[0], class_nm:C[1].toString() });
+    first.set("D", { itrt:D[0], class_nm:D[1].toString() });
+    (window as any).first = first;
     var ch = false;
 
     first.forEach((key, value) => {
@@ -48,34 +44,23 @@ export async function timetable() {
         alert("시간표 조회 실패");
         return;
     }
-    json.hisTimetable[1].row.forEach((row) => {
-        const perio = Number(row.PERIO);
-        if(time_check(row)) {
-            const year = row.ALL_TI_YMD.substring(0, 4);
-            const month = row.ALL_TI_YMD.substring(4, 6);
-            const day = row.ALL_TI_YMD.substring(6, 8);
-            
-            const date = new Date(year + "-" + month + "-" + day);
-            time_table[perio-1][date.getDay()] = "<th>"+row.ITRT_CNTNT+"</th>";
-        }
-    });
-    (document.getElementById("timetable") as HTMLElement).innerHTML = time_table.toString().replace(/,/g,"");
-}
+    (window as any).json = json;
+    assembly.init();
 
-function time_check(row:row):boolean {
-    var result = false;
-    const itrt = row.ITRT_CNTNT.replace("Ⅰ", "");
-    if(default_first.includes(itrt) && row.CLASS_NM == class_nm) {
-        result = true;
-    }else {
-        const is = first.get(itrt);
-        if(is) {
-            if(is == "null" || is == row.CLASS_NM) {
-                result = true;
-            }
-        }
-    }
-    return result;
+    json.hisTimetable[1].row.forEach((row) => {
+        (window as any).row = row;
+        (window as any).CLASS_TIME = String(row.CLASS_NM);
+        const itrt = row.ITRT_CNTNT.replace("Ⅰ", "").replace("Ⅱ", "");
+        const perio = Number(row.PERIO);
+        const year = row.ALL_TI_YMD.substring(0, 4);
+        const month = row.ALL_TI_YMD.substring(4, 6);
+        const day = row.ALL_TI_YMD.substring(6, 8);
+        const date = new Date(year + "-" + month + "-" + day);
+
+        console.log(itrt, date.getDay(), perio-1);
+        assembly.time_check(itrt, date.getDay(), perio-1);
+    });
+    (document.getElementById("timetable") as HTMLElement).innerHTML = assembly.getTimetable();
 }
 
 export type row = {
