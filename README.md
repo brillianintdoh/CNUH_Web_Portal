@@ -20,13 +20,62 @@
 ## 프로젝트 설명
 - 충북대사범대학부설고등학교의 웹포털 사이트를 제작하는 프로젝트입니다
 - 이 웹사이트는 학생과 선생님의 편의를 위해 제작되었습니다
-- 웹사이트를 제작하기 위해 HTML, CSS, TypeScript, FreeMarker 등의 프로그래밍 언어를 사용하였습니다
+- 웹사이트를 제작하기 위해 HTML, CSS, TypeScript, FreeMarker, C++ 등의 프로그래밍 언어를 사용하였습니다
 - 웹사이트의 기능은 다음과 같습니다
     - 사용자가 회원가입 및 로그인이 가능합니다
     - 사용자가 자신의 정보를 관리할 수 있습니다
     - 사용자끼리 실시간 채팅을 할 수 있습니다
 
-## 프로젝트 목표
+<br>
+
+# 프로젝트 요소
+
+## WebAssembly 사용
+- WebAssembly는 애플리케이션의 성능을 향상시키기 위해 사용되었습니다
+- C++로 작성된 코드를 WebAssembly로 컴파일하여 브라우저에서 실행할 수 있게 하였습니다.
+- 정보과학 시간에 배운 리스트를 사용했고 쉬운 관리를 위해 class도 사용되었습니다
+- 시간표 정리은 1반 시간표를 기준으로 만들어졌습니다
+
+## timetable.cpp 파일 설명
+- `timetable.cpp` 파일은 시간표 관리 기능을 담당하는 C++ 코드입니다.
+- 이 파일에서 WebAssembly로 컴파일된 코드는 브라우저에서 직접 실행되어 빠른 성능을 제공합니다.
+- ### 원리
+    - `init` 함수를 먼저 실행해 class `TimeTable`를 준비합니다
+    - `timetable.ts`에서 실시간 시간표 값을 json 형태로 받아오고 정보가 있는 row 배열을 `forEach`으로 모든 값을 돌려봅니다
+    - row 값에 과목명을 c++에 `time_check` 라는 함수에 파리미터로 보냅니다
+    - 그 후 아래 작업을 반복한후 `getTimetable`를 호출해 시간표를 가져옵니다
+    ```cpp
+    if(default_time[itrt].compare("1") == 0) { // 필수 과목이고
+        if(CLASS_TIME == class_nm) { // 자신의 반 수업이면 추가
+            time_table[y][x] = "<td>"+row["ITRT_CNTNT"].as<string>()+"</td>";
+            return; // 리턴
+        } 
+    }
+
+    if(CLASS_TIME == "1") { // 1반을 기준으로 잡는다
+        int index = sub_find(itrt); // 1반의 과목의 디폴트 선택과목들인지 확인한다 (고전 읽기: A, 한문:B, 지구과학:C, 세계사:D) 를 기준
+        if(index != -1) {
+            checkTable[index] = "null"; // 삭제
+            next = add(check_abc[itrt], x,y); // 현재 x,y 좌표가 A,B,C,D 과목 중 하나라면 그 위치를 이중연결리스트에 저장합니다
+        }
+    }
+
+    if(my_time.find(itrt) != my_time.end()) { // 과목명이 자신의 선택과목인지 확인합니다
+        string check = my_time[itrt]; // 맞다면 그 과목의 알파벳을 가져옵니다
+        string first_class_nm = first.call<val>("get", check)["class_nm"].as<string>(); // 과목 수업 위치를 가져옵니다
+        if(atoi(CLASS_TIME.c_str()) == 0) CLASS_TIME = "null"; // 1~6반이 아니라면 값을 문자열 "null"로 바꿉니다
+
+        if(CLASS_TIME == first_class_nm) { // 수업 위치가 같다면
+            if(node_find(check)) { // 리스트에서 그 과목이 없다면 0(false)를 리턴하고 만약 있다면 xyz 변수에 좌표를 저장한후 1(true)를 리턴합니다
+                time_table[xyz[check].second][xyz[check].first] = "<td>"+row["ITRT_CNTNT"].as<string>()+"</td>";
+            }
+        }
+    }
+    ```
+<hr>
+<br>
+
+# 프로젝트 목표
 - 프로젝트를 문제없이 완성하고 배포하는 것
 
 <br>
