@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if(plugin_on) {
         Module.onRuntimeInitialized = () => {
             assembly.push(Module.cwrap("init", "void", []), "init");
-            assembly.push(Module.cwrap("time_check", "boolean", ["string", "number", "number"]), "time_check");
+            assembly.push(Module.cwrap("time_check", "void", ["string", "number", "number"]), "time_check");
             assembly.push(Module.cwrap("getTimetable", "string", []), "getTimetable");
             DOM_load();
         }
