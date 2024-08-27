@@ -1,4 +1,5 @@
-import { SchoolTime, Time_Error } from "../../timetable";
+import { SchoolTime, Time_Error } from "../../materials";
+
 const exception = ["진로활동", "동아리활동", "자율활동", "수학", "문학","독서","영어", "스포츠 생활"]
 
 export async function page_1() {

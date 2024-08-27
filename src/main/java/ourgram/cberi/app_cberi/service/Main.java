@@ -35,12 +35,12 @@ public class Main {
         return "page/index/signup";
     }
 
-    @GetMapping("/timetable")
+    @GetMapping("/materials")
     public String timetable(Model model, @CookieValue(name="token", required=true) String token) {
         String id = UserDB.getId(token);
         model.addAttribute("timetable", get.getTimetable(id));
         model.addAttribute("class_nm", get.getClassNm(id));
         model.addAttribute("grade", get.getGrade(id));
-        return "page/timetable/index";
+        return "page/materials/index";
     }
 }

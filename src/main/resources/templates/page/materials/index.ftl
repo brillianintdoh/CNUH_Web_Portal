@@ -5,13 +5,14 @@
         <meta charset="UTF-8">
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <link rel="icon" href="/img/icon.png">
+        <link rel="stylesheet" href="/css/materials.css">
         <script src="/js/boot.js"></script>
     </head>
     <body>
-        <main id="timetable_page">
+        <main id="materials_page">
             <#include "main.ftl" encoding="UTF-8"/>
-            <#include "/page/load.ftl" encoding="UTF-8"/>
         </main>
+        <#include "/page/load.ftl" encoding="UTF-8"/>
 
         <#list timetable?keys as key>
             <script>

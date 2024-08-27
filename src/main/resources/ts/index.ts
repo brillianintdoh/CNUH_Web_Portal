@@ -4,9 +4,9 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { removeClass } from "htmx.org";
 import { account, account_htmx } from "./page/account";
 import { login, login_htmx } from "./page/login";
-import { timetable } from "./page/timetable";
 import { chat, chat_htmx } from "./page/chat";
 import { community } from "./page/community";
+import { materials } from "./page/materials";
 interface EmscriptenModule {
     cwrap: (name: string, returnType: string | null, argTypes: string[]) => (...args: any[]) => any;
     onRuntimeInitialized: () => void;
@@ -15,7 +15,7 @@ declare const Module: EmscriptenModule;
 const plugin_on = document.getElementById("plugin_on") as HTMLElement;
 const login_page = document.getElementById("login_page") as HTMLElement;
 const account_page = document.getElementById("account_page") as HTMLElement;
-const timetable_page = document.getElementById("timetable_page") as HTMLElement;
+const timetable_page = document.getElementById("materials_page") as HTMLElement;
 const chat_page = document.getElementById("chat_page") as HTMLElement;
 const community_page = document.getElementById("community_page") as HTMLElement;
 const load = document.querySelector(".load_menu") as HTMLElement;
@@ -54,7 +54,7 @@ async function DOM_load() {
     if(login_page) {
         await login();
     }else if(timetable_page) {
-        await timetable();
+        await materials();
     }else if(account_page) {
         await account();
         load_is = false;

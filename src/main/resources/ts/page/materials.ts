@@ -3,7 +3,7 @@ const first = new Map<string,{ itrt:string, class_nm:string }>();
 const check = ["1","2","3","4","5","6","null"];
 const grade = (window as any).grade as string;
 
-export async function timetable() {
+export async function materials() {
     const body = new URLSearchParams();
     body.append("grade", grade);
 
