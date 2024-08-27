@@ -49,6 +49,7 @@ if(default_time[itrt].compare("1") == 0) { // 필수 과목이고
         return; // 리턴
     } 
 }
+
 if(CLASS_TIME == "1") { // 1반을 기준으로 잡는다
     int index = sub_find(itrt); // 1반의 과목의 디폴트 선택과목들인지 확인한다 (고전 읽기: A, 한문:B, 지구과학:C, 세계사:D) 를 기준
     if(index != -1) {
