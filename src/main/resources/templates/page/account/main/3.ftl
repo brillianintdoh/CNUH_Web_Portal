@@ -29,7 +29,7 @@
 
         <div id="followingList" class="user-list">
             <h5>팔로잉</h5>
-            <#list following_list as username>
+            <#list follow_list as username>
                 <div class="user-item">
                     <div class="user-info" hx-on:click="show_modal('${username}')">
                         <img src="/load/profile.png?name=${username}" class="profile-pic">
@@ -42,7 +42,7 @@
 
         <div id="followerList" class="user-list" style="display: none;">
             <h5>팔로워</h5>
-            <#list follow_list as username>
+            <#list following_list as username>
                 <div class="user-item">
                     <div class="user-info" hx-on:click="show_modal('${username}')"> 
                         <img src="/load/profile.png?name=${username}" class="profile-pic">

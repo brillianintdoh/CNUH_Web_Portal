@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title> 시간표 </title>
+        <title> 우리학교 정보 </title>
         <meta charset="UTF-8">
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <script src="/js/boot.js"></script>
