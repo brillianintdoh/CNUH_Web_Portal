@@ -18,7 +18,7 @@ public class ServletData {
     @Value("${gcm_key}")
     private String gcm_key;
 
-    public String getKey() {
+    public String getApiKey() {
         return apiKey;
     }
 

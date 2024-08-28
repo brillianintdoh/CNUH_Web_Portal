@@ -55,6 +55,14 @@ body {
     background-color: var(--primary-light) !important;
 }
 
+.meal-type-selector {
+    margin-bottom: 20px;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: var(--primary-color);
+}
+
 @media (max-width: 1200px) {
     body {
         font-size: 14px;

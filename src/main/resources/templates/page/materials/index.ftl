@@ -4,9 +4,9 @@
         <title> 시간표 </title>
         <meta charset="UTF-8">
         <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <script src="/js/boot.js"></script>
         <link rel="icon" href="/img/icon.png">
         <link rel="stylesheet" href="/css/materials.css">
-        <script src="/js/boot.js"></script>
     </head>
     <body>
         <main id="materials_page">

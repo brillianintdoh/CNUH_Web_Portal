@@ -1,4 +1,4 @@
-import { SchoolTime, Time_Error } from "../../materials";
+import { Timetable, Data_Error } from "../../materials";
 
 const exception = ["진로활동", "동아리활동", "자율활동", "수학", "문학","독서","영어", "스포츠 생활"]
 
@@ -52,8 +52,8 @@ async function timetable_list() {
         body: body.toString()
     });
 
-    const json = await post.json() as SchoolTime;
-    const error = json as unknown as Time_Error;
+    const json = await post.json() as Timetable;
+    const error = json as unknown as Data_Error;
     if(error?.RESULT) {
         alert("선택과목 조회 실패");
         return;

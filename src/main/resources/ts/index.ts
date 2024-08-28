@@ -1,6 +1,5 @@
 import "./htmx.js";
 import "htmx.org/dist/ext/ws";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { removeClass } from "htmx.org";
 import { account, account_htmx } from "./page/account";
 import { login, login_htmx } from "./page/login";
@@ -21,14 +20,14 @@ const community_page = document.getElementById("community_page") as HTMLElement;
 const load = document.querySelector(".load_menu") as HTMLElement;
 class Assembly {
     init!: () => void;
-    time_check!: (itrt:string, x:number, y:number) => boolean;
+    time_check!: (itrt:string, x:number, y:number) => void;
     getTimetable!: () => string;
 
     push(fun:Function, funName:string) {
         if(funName == "init") {
             this.init = fun as () => void;
         }else if(funName == "time_check") {
-            this.time_check = fun as (itrt:string, x:number, y:number) => boolean;
+            this.time_check = fun as (itrt:string, x:number, y:number) => void;
         }else if(funName == "getTimetable") {
             this.getTimetable = fun as () => string;
         }

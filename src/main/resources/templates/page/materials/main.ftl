@@ -1,19 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">학교 정보 시스템</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#timetable">시간표</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#menu">급식 메뉴</a>
-                </li>
-            </ul>
-        </div>
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-backspace"></i>
+            돌아가기
+        </a>
     </div>
 </nav>
 
@@ -33,34 +23,90 @@
                     </tr>
                 </thead>
                 <tbody id="timetable">
+                    <tr>
+                        <th>1교시</th>
+                        <td>과목1</td>
+                        <td>과목2</td>
+                        <td>과목3</td>
+                        <td>과목4</td>
+                        <td>과목5</td>
+                    </tr>
+                    <tr>
+                        <th>2교시</th>
+                        <td>과목1</td>
+                        <td>과목2</td>
+                        <td>과목3</td>
+                        <td>과목4</td>
+                        <td>과목5</td>
+                    </tr>
+                    <tr>
+                        <th>3교시</th>
+                        <td>과목1</td>
+                        <td>과목2</td>
+                        <td>과목3</td>
+                        <td>과목4</td>
+                        <td>과목5</td>
+                    </tr>
+                    <tr>
+                        <th>4교시</th>
+                        <td>과목1</td>
+                        <td>과목2</td>
+                        <td>과목3</td>
+                        <td>과목4</td>
+                        <td>과목5</td>
+                    </tr>
+                    <tr>
+                        <th>5교시</th>
+                        <td>과목1</td>
+                        <td>과목2</td>
+                        <td>과목3</td>
+                        <td>과목4</td>
+                        <td>과목5</td>
+                    </tr>
+                    <tr>
+                        <th>6교시</th>
+                        <td>과목1</td>
+                        <td>과목2</td>
+                        <td>과목3</td>
+                        <td>과목4</td>
+                        <td>과목5</td>
+                    </tr>
+                    <tr>
+                        <th>7교시</th>
+                        <td>과목1</td>
+                        <td>과목2</td>
+                        <td>과목3</td>
+                        <td>과목4</td>
+                        <td>과목5</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
     
-    <div id="menu" class="content">
-        <h2 class="text-center mb-4">이번 달 급식 메뉴</h2>
+    <div class="content">
+        <h2 class="text-center mb-4">이번 주 급식 메뉴</h2>
+        <div class="meal-type-selector d-flex justify-content-center">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" id="meals_menu" style="height:90%" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    중식
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><button class="dropdown-item active" id="default_btn" href="" hx-on:click="swap_meals(event)">중식</button></li>
+                    <li><button class="dropdown-item" href="" hx-on:click="swap_meals(event)">석식</button></li>
+                </ul>
+            </div>
+        </div>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>날짜</th>
+                        <th>종류</th>
                         <th>메뉴</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>8/1</td>
-                        <td>김치찌개,제육볶음,멸치볶음,김,밥</td>
-                    </tr>
-                    <tr>
-                        <td>8/2</td>
-                        <td>된장찌개,고등어구이,시금치나물,깍두기,밥</td>
-                    </tr>
-                    <tr>
-                        <td>8/3</td>
-                        <td>미역국,불고기,오이무침,배추김치,밥</td>
-                    </tr>
+                <tbody id="meals">
                 </tbody>
             </table>
         </div>
