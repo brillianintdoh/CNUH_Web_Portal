@@ -10,7 +10,7 @@
     </head>
     <body>
         <main id="materials_page">
-            <#include "main.ftl" encoding="UTF-8"/>
+            <#include "main.html" encoding="UTF-8"/>
         </main>
         <#include "/page/load.ftl" encoding="UTF-8"/>
 
