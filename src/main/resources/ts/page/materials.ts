@@ -55,6 +55,25 @@ export async function materials() {
         return;
     }
 
+    let meals_now = "";
+    meals_json.mealServiceDietInfo[1].row.forEach((row) => {
+        const date = new Date();
+        const month = row.MLSV_YMD.substring(4, 6);
+        const day = row.MLSV_YMD.substring(6, 8);
+
+        if(Number(month) == date.getMonth()+1 && Number(day) == date.getDate()) {
+            const menu = row.DDISH_NM.split("<br/>").toString().replace((/\s*\([^)]*\)/g), "").split(",");
+            meals_now += "<tr> <td>"+row.MMEAL_SC_NM+"</td> <td>";
+
+            menu.forEach((m) => {
+                meals_now += m+", ";
+            });
+            meals_now = meals_now.substring(0, meals_now.length-2);
+            meals_now+="</td> </tr>";
+        }
+    });
+    (document.getElementById("meals_now") as HTMLElement).innerHTML = meals_now;
+
     (document.getElementById("default_btn") as HTMLButtonElement).click();
 
     assembly.init();

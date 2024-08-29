@@ -63,7 +63,7 @@ public class Chat {
     public String save(@CookieValue(name="token", required=true) String token, @RequestParam(name="username", required=true) String username, @RequestParam(name="follow_name", required=true) String follow_name, @RequestParam(name="message", required=true) String message) {
         String id = UserDB.getId(token);
         String follow_id = user.getID(follow_name);
-        if(id.equals(user.getID(username)) && get.isFollow(id, follow_id)) {
+        if(id.equals(user.getID(username)) && get.isFollow(id, follow_id) && message.equals("")) {
             String room_id = get.getChatRoomId(id, follow_id);
 
             dbPush.addNotif(room_id, follow_id);
