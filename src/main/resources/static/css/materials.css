@@ -9,6 +9,10 @@ body {
     padding-top: 56px;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
 .navbar {
     background-color: var(--primary-color) !important;
 }
