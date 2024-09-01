@@ -1,6 +1,27 @@
-import { Timetable, Data_Error } from "../../materials";
+import { Timetable, mSb } from "../../materials";
 
-const exception = ["진로활동", "동아리활동", "자율활동", "수학", "문학","독서","영어", "스포츠 생활"]
+const exception = [
+    "국어", "독서", "수학", "영어", "진로", "통합사회", "한국사", "과탐", "미술", "음악", "체육", "스포츠생활", "기술가정", 
+    "정보", "자율", "창체"
+];
+export const change: { [key: string]: string } = {
+    "세계": "세계사",
+    "한국": "한국사",
+    "세지": "세계지리",
+    "여지": "여행지리",
+    "동아": "동아시아사",
+    "기가": "기술가정",
+    "스생": "스포츠 생활",
+    "생과": "생활 과학",
+    "물리": "물리학",
+    "윤사": "윤리와사상",
+    "생명": "생명과학",
+    "인지": "인공지능 기초",
+    "중문": "중국 문화",
+    "통사": "통합사회",
+    "고전": "고전 읽기",
+    "지구": "지구과학",
+}
 
 export async function page_1() {
     const a = document.getElementsByName("a").item(0) as HTMLInputElement;
@@ -39,33 +60,29 @@ async function timetable_list() {
     var itrt:string[] = [];
     const itrt_cntnt = document.getElementById("itrt_cntnt") as HTMLDataListElement;
 
-    const body = new URLSearchParams();
-    body.append("grade", grade);
-
-    const sem = (new Date().getMonth()+1 <= 7) ? "1" : "2";
-    body.append("sem", sem);
-    const post = await fetch("/service/timetable", {
-        method:"POST",
-        headers: {
-            "Content-Type":"application/x-www-form-urlencoded"
-        },
-        body: body.toString()
-    });
+    const post = await fetch("/service/timetable", {method:"POST"});
 
     const json = await post.json() as Timetable;
-    const error = json as unknown as Data_Error;
-    if(error?.RESULT) {
-        alert("선택과목 조회 실패");
-        return;
-    }
-    
-    json.hisTimetable[1].row.forEach((row) => {
-        const list = row.ITRT_CNTNT.replace("Ⅰ", "").replace("Ⅱ", "");
-        if(list && !itrt.includes(list) && !exception.includes(list)) {
-            itrt.push(list);
-        }
-    });
 
+    json.자료147[Number(grade)].forEach((class_nm) => {
+        if(!Array.isArray(class_nm)) return;
+        class_nm.forEach((day) => {
+            if(!Array.isArray(day)) return;
+            day.forEach((perio) => {
+                if(perio != 0) {
+                    const it = mSb(perio, json.분리) % json.분리;
+                    let itrt_c = json.자료492[it];
+                    if(typeof itrt_c == "string") {
+                        itrt_c = itrt_c.replace(/\d+/g, "");
+                        if(change[itrt_c]) itrt_c = change[itrt_c];
+                        if(exception.includes(itrt_c) || itrt.includes(itrt_c)) return;
+                        itrt.push(itrt_c);
+                    }
+                }
+            });
+        });
+    });
+    
     itrt.forEach((value) => {
         const option = document.createElement("option") as HTMLOptionElement;
         option.innerHTML = value;

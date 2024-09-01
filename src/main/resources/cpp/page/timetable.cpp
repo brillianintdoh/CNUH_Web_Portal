@@ -14,12 +14,12 @@ TimeTable::TimeTable() {
     this->default_time["문학"] = "1";
     this->default_time["영어"] = "1";
     this->default_time["독서"] = "1";
-    this->default_time["동아리활동"] = "1";
-    this->default_time["진로활동"] = "1";
+    this->default_time["진로"] = "1";
     this->default_time["스포츠 생활"] = "1";
-    this->default_time["자율활동"] = "1";
+    this->default_time["창체"] = "1";
+    this->default_time["자율"] = "1";
 
-    class_nm = val::global("class_nm").as<string>();
+    class_nm = val::global("class_nm").as<int>();
     my_time[val::global("A").as<string>()] = "A";
     my_time[val::global("B").as<string>()] = "B";
     my_time[val::global("C").as<string>()] = "C";
@@ -35,19 +35,15 @@ TimeTable::~TimeTable() {
     delete tmp;
 }
 
-void TimeTable::run(char* itrt, int x, int y) {
-    val row = val::global("row");
-    val first = val::global("first");
-    string CLASS_TIME  = val::global("CLASS_TIME").as<string>();
-
-    if(default_time[itrt].compare("1") == 0) {
-        if(CLASS_TIME == class_nm) {
-            time_table[y][x] = "<td>"+row["ITRT_CNTNT"].as<string>()+"</td>";
+void TimeTable::run(char* itrt, int x, int y, int class_time) {
+    if(default_time[itrt] == "1") {
+        if(class_time == class_nm) {
+            time_table[y][x] = "<td>"+string(itrt)+"</td>";
             return;
         } 
     }
 
-    if(CLASS_TIME == "1") {
+    if(class_time == 1) {
         int index = sub_find(itrt);
         if(index != -1) {
             checkTable[index] = "null";
@@ -57,13 +53,9 @@ void TimeTable::run(char* itrt, int x, int y) {
 
     if(my_time.find(itrt) != my_time.end()) {
         string check = my_time[itrt];
-        string first_class_nm = first.call<val>("get", check)["class_nm"].as<string>();
-        if(atoi(CLASS_TIME.c_str()) == 0) CLASS_TIME = "null";
 
-        if(CLASS_TIME == first_class_nm) {
-            if(node_find(check)) {
-                time_table[xyz[check].second][xyz[check].first] = "<td>"+row["ITRT_CNTNT"].as<string>()+"</td>";
-            }
+        if(node_find(check)) {
+            time_table[xyz[check].second][xyz[check].first] = "<td>"+string(itrt)+"</td>";
         }
     }
 }
@@ -99,9 +91,9 @@ char* TimeTable::get() {
     return str;
 }
 
-int TimeTable::sub_find(string itrt) {
+int TimeTable::sub_find(string itrt_c) {
     for(int i = 0; i < 16; i++) {
-        if(checkTable[i] == itrt) {
+        if(checkTable[i] == itrt_c) {
             return i;
         }
     }

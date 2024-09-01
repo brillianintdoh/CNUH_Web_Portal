@@ -28,7 +28,7 @@ class TimeTable {
             {"<tr><th>6교시</th>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","</tr>"},
             {"<tr><th>7교시</th>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","</tr>"}
         };
-        string class_nm;
+        int class_nm;
         map<string, string> check_abc;
         map<string, string> default_time;
         map<string, string> my_time;
@@ -37,8 +37,8 @@ class TimeTable {
         TimeTable();
         ~TimeTable();
         Node* add(string itrt, int x, int y);
-        int sub_find(string check);
+        int sub_find(string itrt_c);
         int node_find(string check);
-        void run(char* itrt, int x, int y);
+        void run(char* itrt, int x, int y, int class_time);
         char* get();
 };

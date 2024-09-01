@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.YearMonth;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,27 +27,26 @@ public class SchoolData {
 
     @PostMapping("/timetable")
     public ResponseEntity<String> timetable(HttpServletRequest req) throws IOException {
-        StringBuilder result = new StringBuilder();
+        StringBuilder json = new StringBuilder();
         HttpHeaders head = new HttpHeaders();
         head.add("Content-Type", "application/json; charset=UTF-8");
-        LocalDate now = LocalDate.now();
-        String sem = req.getParameter("sem");
-        String grade = req.getParameter("grade");
-        String[] yaer = getYear();
 
-        String parame = "?KEY="+servlet_db.getApiKey()+"&Type=json&pIndex=1&pSize=300&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=7003892&AY="+now.getYear()+"&GRADE="+grade+"&SEM="+sem+"&TI_FROM_YMD="+yaer[0]+"&TI_TO_YMD="+yaer[1];
-        URL url = new URL("https://open.neis.go.kr/hub/hisTimetable"+parame);
+        URL url = new URL("http://comci.net:4082/36179_T?NzM2MjlfMjcwMjFfMF8x");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
         conn.setRequestMethod("GET");
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         String line;
         while((line = reader.readLine()) != null) {
-            result.append(line);
+            json.append(line);
         }
         reader.close();
 
-        return new ResponseEntity<>(result.toString(), head, HttpStatus.OK);
+        String result = json.toString();
+        result = result.substring(0, result.lastIndexOf("}") + 1);
+
+        return new ResponseEntity<>(result, head, HttpStatus.OK);
     }
 
     @PostMapping("/meals")
@@ -74,8 +75,25 @@ public class SchoolData {
         LocalDate now = LocalDate.now();
         int week = now.getDayOfWeek().getValue();
         int month = now.getMonthValue();
-        int start_day = (now.getDayOfMonth() - week)+1;
-        int end_day = now.getDayOfMonth()+(5 - week);
+        int start_day, end_day;
+        if(week > 5) {
+            start_day = now.getDayOfMonth() + (7 % (week-1));
+            end_day = now.getDayOfMonth() + (4 + (7 % (week-1)));
+        }else {
+            start_day = (now.getDayOfMonth() - week)+1;
+            end_day = now.getDayOfMonth()+(5 - week);
+        }
+
+        int length = YearMonth.now().lengthOfMonth();
+        if(start_day > length) {
+            month++;
+            start_day = start_day - length;
+        }
+
+        if(end_day > length) {
+            end_day = end_day - length;
+        }
+
         String dayIs = "";
         String monthIS = "";
         if(month < 10) {
@@ -89,7 +107,7 @@ public class SchoolData {
         if(end_day >= 10) {
             dayIs = "";
         }
-        String endYear = now.getYear() + "" + monthIS + month + "" + dayIs + (now.getDayOfMonth()+(5 - week));
+        String endYear = now.getYear() + "" + monthIS + month + "" + dayIs + end_day;
 
         return new String[]{startYear, endYear};
     }

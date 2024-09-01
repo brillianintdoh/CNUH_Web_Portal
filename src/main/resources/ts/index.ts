@@ -18,29 +18,18 @@ const timetable_page = document.getElementById("materials_page") as HTMLElement;
 const chat_page = document.getElementById("chat_page") as HTMLElement;
 const community_page = document.getElementById("community_page") as HTMLElement;
 const load = document.querySelector(".load_menu") as HTMLElement;
-class Assembly {
-    init!: () => void;
-    time_check!: (itrt:string, x:number, y:number) => void;
-    getTimetable!: () => string;
-
-    push(fun:Function, funName:string) {
-        if(funName == "init") {
-            this.init = fun as () => void;
-        }else if(funName == "time_check") {
-            this.time_check = fun as (itrt:string, x:number, y:number) => void;
-        }else if(funName == "getTimetable") {
-            this.getTimetable = fun as () => string;
-        }
-    }
+export const assembly = {
+    init: () => {},
+    time_check: (itrt:string, x:number, y:number, class_time:number) => {},
+    getTimetable: () => ""
 };
-export const assembly = new Assembly();
 
 document.addEventListener("DOMContentLoaded", () => {
     if(plugin_on) {
         Module.onRuntimeInitialized = () => {
-            assembly.push(Module.cwrap("init", "void", []), "init");
-            assembly.push(Module.cwrap("time_check", "void", ["string", "number", "number"]), "time_check");
-            assembly.push(Module.cwrap("getTimetable", "string", []), "getTimetable");
+            assembly.init = Module.cwrap("init", "void", []);
+            assembly.time_check = Module.cwrap("time_check", "void", ["string", "number", "number", "number"]);
+            assembly.getTimetable = Module.cwrap("getTimetable", "string", []);
             DOM_load();
         }
     }else {

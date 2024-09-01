@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "restart":"sudo service tomcat10 restart"
+    "restart": "sudo service tomcat10 restart"
   },
   "keywords": [],
   "author": "",

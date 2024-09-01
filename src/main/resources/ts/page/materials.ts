@@ -1,55 +1,16 @@
 import { toggleClass } from "htmx.org";
 import { assembly } from "..";
-const first = new Map<string,{ itrt:string, class_nm:string }>();
-const check = ["1","2","3","4","5","6","null"];
-const grade = (window as any).grade as string;
+import { change } from "./account/menu/1";
+const grade = Number((window as any).grade as string);
 let meals_json:Meals;
 
 export async function materials() {
-    const body = new URLSearchParams();
-    body.append("grade", grade);
-
-    const sem = (new Date().getMonth()+1 <= 7) ? "1" : "2";
-    body.append("sem", sem);
-    const post = await fetch("/service/timetable", {
-        method:"POST",
-        headers: {
-            "Content-Type":"application/x-www-form-urlencoded"
-        },
-        body: body
-    });
-    const A = ((window as any).A as string).split(",");
-    const B = ((window as any).B as string).split(",");
-    const C = ((window as any).C as string).split(",");
-    const D = ((window as any).D as string).split(",");
-    (window as any).A = A[0];
-    (window as any).B = B[0];
-    (window as any).C = C[0];
-    (window as any).D = D[0];
-
-    first.set("A", { itrt:A[0], class_nm:A[1].toString() });
-    first.set("B", { itrt:B[0], class_nm:B[1].toString() });
-    first.set("C", { itrt:C[0], class_nm:C[1].toString() });
-    first.set("D", { itrt:D[0], class_nm:D[1].toString() });
-    (window as any).first = first;
     (window as any).swap_meals = swap_meals;
-    var ch = false;
-
-    first.forEach((key, value) => {
-        if(check.includes(value)) {
-            ch = true;
-        }
-    });
-
+    const post = await fetch("/service/timetable", { method:"POST" });
     meals_json = await (await fetch("/service/meals", { method:"POST" })).json() as Meals;
-    const time_json = await post.json() as Timetable;
-    const time_error = time_json as unknown as Data_Error;
-    const meals_error = meals_json as unknown as Data_Error;
-    if(time_error?.RESULT || ch) {
-        alert("시간표 조회 실패");
-        return;
-    }
 
+    const time_json = await post.json() as Timetable;
+    const meals_error = meals_json as unknown as Data_Error;
     if(meals_error?.RESULT) {
         alert("급식 조회 실패");
         return;
@@ -75,19 +36,24 @@ export async function materials() {
     (document.getElementById("meals_now") as HTMLElement).innerHTML = meals_now;
 
     (document.getElementById("default_btn") as HTMLButtonElement).click();
-
+    
     assembly.init();
-    time_json.hisTimetable[1].row.forEach((row) => {
-        (window as any).row = row;
-        (window as any).CLASS_TIME = String(row.CLASS_NM);
-        const itrt = row.ITRT_CNTNT.replace("Ⅰ", "").replace("Ⅱ", "");
-        const perio = Number(row.PERIO);
-        const year = row.ALL_TI_YMD.substring(0, 4);
-        const month = row.ALL_TI_YMD.substring(4, 6);
-        const day = row.ALL_TI_YMD.substring(6, 8);
-        const date = new Date(year + "-" + month + "-" + day);
-
-        assembly.time_check(itrt, date.getDay(), perio-1);
+    time_json.자료147[grade].forEach((class_nm, c_in) => {
+        if(!Array.isArray(class_nm)) return;
+        class_nm.forEach((day, d_in) => {
+            if(!Array.isArray(day)) return;
+            day.forEach((perio, p_in) => {
+                if(perio != 0) {
+                    const it = mSb(perio, time_json.분리) % time_json.분리;
+                    let itrt = time_json.자료492[it];
+                    if(typeof itrt == "string") {
+                        itrt = itrt.replace(/\d+/g, "");
+                        if(change[itrt]) itrt = change[itrt];
+                        assembly.time_check(itrt, d_in, p_in-1, c_in);
+                    }
+                }
+            });
+        });
     });
     (document.getElementById("timetable") as HTMLElement).innerHTML = assembly.getTimetable();
 }
@@ -123,45 +89,12 @@ function swap_meals(evt:any) {
     (document.getElementById("meals") as HTMLElement).innerHTML = meals;
 }
 
-export type time_row = {
-    ATPT_OFCDC_SC_CODE:string,
-    ATPT_OFCDC_SC_NM:string,
-    SD_SCHUL_CODE:string,
-    SCHUL_NM:string,
-    AY:string,
-    SEM:string,
-    ALL_TI_YMD:string,
-    DGHT_CRSE_SC_NM:string,
-    ORD_SC_NM:string,
-    DDDEP_NM:string,
-    GRADE:string,
-    CLRM_NM:string,
-    CLASS_NM:string,
-    PERIO:string,
-    ITRT_CNTNT:string,
-    LOAD_DTM:string
-};
-
-export type Timetable = {
-    hisTimetable:[
-        {
-            head :[
-                {
-                    list_total_count:number
-                },
-                {
-                    RESULT: {
-                        CODE:string,
-                        MESSAGE:string
-                    }
-                }
-            ]
-        },
-        {
-            row:time_row[]
-        }
-    ]
-};
+export function mSb(mm:number, m2:number) {
+    if (m2 == 100) {
+        return mm % m2;
+    }
+    return Math.floor(mm / m2);
+}
 
 export type Data_Error = {
     RESULT:{
@@ -207,4 +140,35 @@ type Meals = {
             row: meals_row[]
         }
     ]
+};
+
+export type Timetable = {
+    교사수: number;
+    자료446: string[];
+    학급수: number[];
+    요일별시수: number[][];
+    자료492: string[] | number[];
+    자료481: (number | (number | (number | number[])[])[])[];
+    전일제: number[];
+    버젼: string;
+    동시수업수: number;
+    담임: number[][];
+    가상학급수: number[];
+    특별실수: number;
+    열람제한일: string;
+    자료244: string;
+    학기시작일자: string;
+    학교명: string;
+    지역명: string;
+    학년도: number;
+    분리: number;
+    강의실: number;
+    시작일: string;
+    일과시간: string[];
+    일자자료: (number | string)[][];
+    오늘r: number;
+    자료147: number[][][][]; 
+    자료542: (number | (number | (number | number[])[])[])[];
+    자료245: (number | (number | (number | number[])[])[])[];
+    동시그룹: number[][];
 };

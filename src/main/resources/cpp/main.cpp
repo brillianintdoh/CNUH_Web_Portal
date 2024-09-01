@@ -6,8 +6,8 @@ extern "C" {
         timetable = new TimeTable();
     }
 
-    void time_check(char* itrt, int x, int y) {
-        timetable->run(itrt, x, y);
+    void time_check(char* itrt, int x, int y, int class_time) {
+        timetable->run(itrt, x, y, class_time);
     }
 
     char* getTimetable() {
