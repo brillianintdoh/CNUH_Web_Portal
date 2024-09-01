@@ -36,11 +36,9 @@ TimeTable::~TimeTable() {
 }
 
 void TimeTable::run(char* itrt, int x, int y, int class_time) {
-    if(default_time[itrt] == "1") {
-        if(class_time == class_nm) {
-            time_table[y][x] = "<td>"+string(itrt)+"</td>";
-            return;
-        } 
+    if(default_time[itrt] == "1" && class_time == class_nm) {
+        time_table[y][x] = "<td>"+string(itrt)+"</td>";
+        return;
     }
 
     if(class_time == 1) {
