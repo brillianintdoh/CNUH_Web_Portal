@@ -1,9 +1,6 @@
 package ourgram.cberi.app_cberi.service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,7 +19,6 @@ import ourgram.cberi.app_cberi.security.UserDB;
 @RestController
 @RequestMapping("/service/edit")
 public class Edit {
-    private String[] check = new String[]{"1","2","3","4","5","6","null"};
     private DBUser user;
     private DBEdit edit;
     private DBGet get;
@@ -54,23 +50,14 @@ public class Edit {
         head.add("Content-Type", "text/html; charset=UTF-8");
         String id = UserDB.getId(token);
         String a = req.getParameter("a");
-        String a_class = req.getParameter("a_class");
-
         String b = req.getParameter("b");
-        String b_class = req.getParameter("b_class");
-
         String c = req.getParameter("c");
-        String c_class = req.getParameter("c_class");
-
         String d = req.getParameter("d");
-        String d_class = req.getParameter("d_class");
-        List<String> ch = new ArrayList<>(Arrays.asList(check));
 
-
-        if(get.isTimechck(id, (a+","+a_class), (b+","+b_class), (c+","+c_class), (d+","+d_class)) || !ch.contains(a_class) || !ch.contains(b_class) || !ch.contains(c_class) || !ch.contains(d_class)) {
+        if(get.isTimechck(id, a, b, c, d)) {
             result = "<script>alert('에러 발생')</script>";
         }else {
-            edit.setTimetable(id, (a+","+a_class), (b+","+b_class), (c+","+c_class), (d+","+d_class));
+            edit.setTimetable(id, a, b, c, d);
         }
 
         return new ResponseEntity<>(result, head, HttpStatus.OK);

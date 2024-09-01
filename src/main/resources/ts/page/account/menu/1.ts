@@ -25,16 +25,9 @@ export const change: { [key: string]: string } = {
 
 export async function page_1() {
     const a = document.getElementsByName("a").item(0) as HTMLInputElement;
-    const a_class = document.getElementsByName("a_class").item(0) as HTMLInputElement;
-
     const b = document.getElementsByName("b").item(0) as HTMLInputElement;
-    const b_class = document.getElementsByName("b_class").item(0) as HTMLInputElement;
-
     const c = document.getElementsByName("c").item(0) as HTMLInputElement;
-    const c_class = document.getElementsByName("c_class").item(0) as HTMLInputElement;
-
     const d = document.getElementsByName("d").item(0) as HTMLInputElement;
-    const d_class = document.getElementsByName("d_class").item(0) as HTMLInputElement;
 
     const a_value = ((window as any).a as string).split(",");
     const b_value = ((window as any).b as string).split(",");
@@ -45,12 +38,6 @@ export async function page_1() {
     b.value = b_value[0];
     c.value = c_value[0];
     d.value = d_value[0];
-
-    a_class.value = a_value[1];
-    b_class.value = b_value[1];
-    c_class.value = c_value[1];
-    d_class.value = d_value[1];
-
     await timetable_list();
 }
 
