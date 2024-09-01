@@ -47,23 +47,25 @@
         <div class="col-md-6">
             <p style="font-size:13px;">시간표 기능 사용하시려면 이 설정을 해야합니다 원쪽 위부터 1,2,3,4 를 a,b,c,d 로 하시면 됩니다</p>
         </div>
+
+        <#if grade != "1"> 
+            <#list dropdown as n>
+                <#assign index = n?index+1 />
+                <div class="col-md-6">
+                    <label class="form-label">(${index} 번째 선택과목)</label>
+                    <input type="text" class="form-control text-center" placeholder="${n} 과목" name="${n}" list="itrt_cntnt" required>
+                </div>
+            </#list>
         
-        <#list dropdown as n>
-            <#assign index = n?index+1 />
-            <div class="col-md-6">
-                <label class="form-label">(${index} 번째 선택과목)</label>
-                <input type="text" class="form-control text-center" placeholder="${n} 과목" name="${n}" list="itrt_cntnt" required>
+            <datalist id="itrt_cntnt">
+            </datalist>
+        
+            <div class="col-12">
+                <form hx-post="/service/edit/timetable" hx-swap="afterbegin" hx-include="[name=a],[name=b],[name=c],[name=d]">
+                    <button class="w-100 btn btn-primary">변경</button>
+                </form>
             </div>
-        </#list>
-        
-        <datalist id="itrt_cntnt">
-        </datalist>
-        
-        <div class="col-12">
-            <form hx-post="/service/edit/timetable" hx-swap="afterbegin" hx-include="[name=a],[name=b],[name=c],[name=d]">
-                <button class="w-100 btn btn-primary">변경</button>
-            </form>
-        </div>
+        </#if>
         
         <div class="col-md-6">
         </div>
