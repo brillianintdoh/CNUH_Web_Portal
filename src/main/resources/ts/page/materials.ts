@@ -6,10 +6,9 @@ let meals_json:Meals;
 
 export async function materials() {
     (window as any).swap_meals = swap_meals;
-    const post = await fetch("/service/timetable", { method:"POST" });
+    const time_json = await (await fetch("/service/timetable", { method:"POST" })).json() as Timetable;
     meals_json = await (await fetch("/service/meals", { method:"POST" })).json() as Meals;
 
-    const time_json = await post.json() as Timetable;
     const meals_error = meals_json as unknown as Data_Error;
     if(meals_error?.RESULT) {
         alert("급식 조회 실패");
