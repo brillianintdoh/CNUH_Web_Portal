@@ -1,5 +1,4 @@
 import { Timetable, mSb } from "../../materials";
-const grade = (window as any).grade as string;
 const exception = [
     "국어", "독서", "수학", "영어", "진로", "통합사회", "한국사", "과탐", "미술", "음악", "체육", "스포츠 생활", "기술가정", 
     "정보", "자율", "창체"
@@ -24,28 +23,29 @@ export const change: { [key: string]: string } = {
 }
 
 export async function page_1() {
+    const grade = (window as any).grade as string;
     if(grade == "1") return;
     const a = document.getElementsByName("a").item(0) as HTMLInputElement;
     const b = document.getElementsByName("b").item(0) as HTMLInputElement;
     const c = document.getElementsByName("c").item(0) as HTMLInputElement;
     const d = document.getElementsByName("d").item(0) as HTMLInputElement;
 
-    a.value = (window as any).A as string;
-    b.value = (window as any).B as string;
-    c.value = (window as any).C as string;
-    d.value = (window as any).D as string;
-    await timetable_list();
+    a.value = (window as any).a as string;
+    b.value = (window as any).b as string;
+    c.value = (window as any).c as string;
+    d.value = (window as any).d as string;
+    await timetable_list(Number(grade));
 }
 
-async function timetable_list() {
+async function timetable_list(grade:number) {
     var itrt:string[] = [];
     const itrt_cntnt = document.getElementById("itrt_cntnt") as HTMLDataListElement;
 
     const post = await fetch("/service/timetable", {method:"POST"});
-
     const json = await post.json() as Timetable;
+    console.log(grade);
 
-    json.자료147[Number(grade)].forEach((class_nm) => {
+    json.자료147[grade].forEach((class_nm) => {
         if(!Array.isArray(class_nm)) return;
         class_nm.forEach((day) => {
             if(!Array.isArray(day)) return;
