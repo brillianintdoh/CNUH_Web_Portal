@@ -43,7 +43,6 @@ async function timetable_list(grade:number) {
 
     const post = await fetch("/service/timetable", {method:"POST"});
     const json = await post.json() as Timetable;
-    console.log(grade);
 
     json.자료147[grade].forEach((class_nm) => {
         if(!Array.isArray(class_nm)) return;
