@@ -36,7 +36,7 @@ export async function materials() {
 
     (document.getElementById("default_btn") as HTMLButtonElement).click();
     
-    assembly.init();
+    assembly.init(1);
     time_json.자료147[grade].forEach((class_nm, c_in) => {
         if(!Array.isArray(class_nm)) return;
         class_nm.forEach((day, d_in) => {
@@ -48,7 +48,7 @@ export async function materials() {
                     if(typeof itrt == "string") {
                         itrt = itrt.replace(/\d+/g, "");
                         if(change[itrt]) itrt = change[itrt];
-                        assembly.time_check(itrt, d_in, p_in-1, c_in);
+                        assembly.time_push(itrt, d_in, p_in-1, c_in);
                     }
                 }
             });

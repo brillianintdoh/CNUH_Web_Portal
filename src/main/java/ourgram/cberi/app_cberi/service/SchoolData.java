@@ -70,6 +70,28 @@ public class SchoolData {
         return new ResponseEntity<>(result.toString(), head, HttpStatus.OK);
     }
 
+    @PostMapping("/calendar")
+    public ResponseEntity<String> calendar() throws IOException {
+        StringBuilder result = new StringBuilder();
+        HttpHeaders head = new HttpHeaders();
+        head.add("Content-Type", "application/json; charset=UTF-8");
+        YearMonth year = YearMonth.now();
+
+        String parame = "?KEY="+servlet_db.getApiKey()+"&Type=json&pIndex=1&pSize=500&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=7003892&AA_FROM_YMD="+year.getYear()+"0101&AA_TO_YMD="+year.getYear()+"1231";
+        URL url = new URL("https://open.neis.go.kr/hub/SchoolSchedule"+parame);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String line;
+        while((line = reader.readLine()) != null) {
+            result.append(line);
+        }
+        reader.close();
+
+        return new ResponseEntity<>(result.toString(), head, HttpStatus.OK);
+    }
+
     private String[] getYear() {
         LocalDate now = LocalDate.now();
         int week = now.getDayOfWeek().getValue();

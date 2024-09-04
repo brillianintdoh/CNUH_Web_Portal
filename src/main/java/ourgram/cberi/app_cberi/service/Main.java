@@ -1,5 +1,6 @@
 package ourgram.cberi.app_cberi.service;
 
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,5 +43,13 @@ public class Main {
         model.addAttribute("class_nm", get.getClassNm(id));
         model.addAttribute("grade", get.getGrade(id));
         return "page/materials/index";
+    }
+
+    @GetMapping("/calendar")
+    public String calendar(Model model, @CookieValue(name="token", required=true) String token) {
+        LocalDate date = LocalDate.now();
+        model.addAttribute("month", date.getMonthValue());
+        model.addAttribute("year", date.getYear());
+        return "page/calendar/index";
     }
 }

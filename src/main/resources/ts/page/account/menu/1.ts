@@ -1,5 +1,5 @@
 import { Timetable, mSb } from "../../materials";
-
+const grade = (window as any).grade as string;
 const exception = [
     "국어", "독서", "수학", "영어", "진로", "통합사회", "한국사", "과탐", "미술", "음악", "체육", "스포츠 생활", "기술가정", 
     "정보", "자율", "창체"
@@ -24,26 +24,20 @@ export const change: { [key: string]: string } = {
 }
 
 export async function page_1() {
+    if(grade == "1") return;
     const a = document.getElementsByName("a").item(0) as HTMLInputElement;
     const b = document.getElementsByName("b").item(0) as HTMLInputElement;
     const c = document.getElementsByName("c").item(0) as HTMLInputElement;
     const d = document.getElementsByName("d").item(0) as HTMLInputElement;
 
-    const a_value = ((window as any).a as string).split(",");
-    const b_value = ((window as any).b as string).split(",");
-    const c_value = ((window as any).c as string).split(",");
-    const d_value = ((window as any).d as string).split(",");
-
-    a.value = a_value[0];
-    b.value = b_value[0];
-    c.value = c_value[0];
-    d.value = d_value[0];
+    a.value = (window as any).A as string;
+    b.value = (window as any).B as string;
+    c.value = (window as any).C as string;
+    d.value = (window as any).D as string;
     await timetable_list();
 }
 
 async function timetable_list() {
-    const grade = (window as any).grade as string;
-
     var itrt:string[] = [];
     const itrt_cntnt = document.getElementById("itrt_cntnt") as HTMLDataListElement;
 
