@@ -13,7 +13,7 @@
                 <select class="form-select" style="width:55%;" onchange="swap_calendar(this.value)">
                     <#list 1..12 as i>
                         <#if i == month>
-                            <option value="${i}" id="option_${i}" selected>${year?c}년 ${i}월</option>
+                            <option value="${i}" id="option_${i}" selected>${year?c}년 ${i}월 (현재)</option>
                         <#else>
                             <option value="${i}" id="option_${i}">${year?c}년 ${i}월</option>
                         </#if>
