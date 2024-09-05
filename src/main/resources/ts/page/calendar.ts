@@ -14,6 +14,7 @@ export async function calendar() {
     function getCalendar(month:number) {
         (window as any).lastDay = new Date(year, month, 0).getDate();
         (window as any).fristWeek = new Date(year, month-1, 1).getDay()+1;
+        (window as any).month = month;
         assembly.init(2);
         
         json.SchoolSchedule[1].row.forEach((row) => {
