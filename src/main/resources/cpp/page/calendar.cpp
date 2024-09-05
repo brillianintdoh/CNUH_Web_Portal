@@ -3,7 +3,6 @@
 Calendar::Calendar() {
     window = val::global("window");
     int lastDay = window["lastDay"].as<int>();
-    int month = window["month"].as<int>();
     now_month = window["now_month"].as<int>();
     fristWeek = window["fristWeek"].as<int>();
     nowDay = window["nowDay"].as<int>();
@@ -11,21 +10,15 @@ Calendar::Calendar() {
     int day = 1, week = fristWeek;
     for(int i=0; i < 5; i++) {
         for(int j=week; j <= 7; j++) {
-            string *table = &calendar_table[i][j];
             string className = "";
             string EVENT_NM = "평일";
         
             if(j == 7 || j == 1) {
-                className = "holiday ";
+                className = "holiday";
                 EVENT_NM = "주말";
             }
 
-            string classTd = "";
-            if(nowDay == day && now_month == month) {
-                classTd = "current-day";
-            }
-
-            *table = "<td class='"+classTd+"'>\
+            calendar_table[i][j] = "<td>\
                 <div class='day'>\
                     <p class='day_p "+className+"'>"+to_string(day)+"</p>"+
                     EVENT_NM+"<br>"+
@@ -42,41 +35,60 @@ Calendar::Calendar() {
 
 Calendar::~Calendar() {};
 
-void Calendar::run(int day, int month) {
+void Calendar::run(int date, int month) {
     val row = window["row"];
-    string classTd = "";
-    string className = "";
-    int week = fristWeek, date = 0;
+    int week = fristWeek, day = 0, is = 0;
+    string classTd, className, EVENT_NM, EVENT_CNTNT, SBTR_DD_SC_NM;
+    string* table = NULL;
 
     for(int i=0; i < 5; i++) {
         for(int j=week; j <= 7; j++) {
-            date++;
-            if(date == day) {
-                string* table = &calendar_table[i][j];
-                string EVENT_NM = row["EVENT_NM"].as<string>();
-                string SBTR_DD_SC_NM = row["SBTR_DD_SC_NM"].as<string>();
+            table = &calendar_table[i][j];
+            if(*table == "<td></td>") continue;
+
+            day++;
+            if(day == date) {
+                is = 1;
+                classTd = "";
+            }else if(day == nowDay && month == now_month) {
+                is = 2;
+                classTd = "current-day";
+            }
+
+            if(is) {
+                if(day == date) {
+                    EVENT_NM = row["EVENT_NM"].as<string>();
+                    EVENT_CNTNT = row["EVENT_CNTNT"].as<string>();
+                    SBTR_DD_SC_NM = row["SBTR_DD_SC_NM"].as<string>();
+                    if(is == 2) classTd = "current-day";
+                }else {
+                    EVENT_NM = "";
+                    EVENT_CNTNT = "";
+                    SBTR_DD_SC_NM = "해당없음";
+                }
+
                 if(SBTR_DD_SC_NM != "해당없음") {
                     className = "holiday";
                 }
-    
-                if(EVENT_NM == "토요휴업일") {
+                
+                if(EVENT_NM == "토요휴업일" || j == 7 || j == 1) {
+                    className = "holiday";
                     EVENT_NM = "주말";
-                }
-
-                if(nowDay == day && month == now_month) {
-                    classTd = "current-day";
                 }
 
                 *table = "<td class='"+classTd+"'>\
                     <div class='day'>\
                         <p class='day_p "+className+"'>"+to_string(day)+"</p>"+
-                        EVENT_NM+"<br>"+row["EVENT_CNTNT"].as<string>()+
+                        EVENT_NM+"<br>"+EVENT_CNTNT+
                     "</div>\
                 </td>";
-                return;
+
+                if(is != 2) return;
+                week = 1;
             }else {
                 week = 1;
             }
+            is = 0;
         }
     }
     cout << "에러 (날짜를 찾지 못함)" << endl;
