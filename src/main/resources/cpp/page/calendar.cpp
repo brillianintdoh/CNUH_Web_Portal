@@ -8,9 +8,7 @@ Calendar::Calendar() {
     fristWeek = window["fristWeek"].as<int>();
     nowDay = window["nowDay"].as<int>();
 
-    int week = fristWeek;
-
-    int day = 1;
+    int day = 1, week = fristWeek;
     for(int i=0; i < 5; i++) {
         for(int j=week; j <= 7; j++) {
             string *table = &calendar_table[i][j];
@@ -47,15 +45,14 @@ Calendar::~Calendar() {};
 void Calendar::run(int day, int week) {
     val row = window["row"];
     int month = window["month"].as<int>();
+    string classTd = "";
+    string className = "";
 
     int x = day/7;
     string* table = &calendar_table[x][week];
     if(*table == "<td></td>") {
-        x += 1;
+        table = &calendar_table[++x][week];
     }
-    table = &calendar_table[x][week];
-    string classTd = "";
-    string className = "";
 
     string EVENT_NM = row["EVENT_NM"].as<string>();
     string SBTR_DD_SC_NM = row["SBTR_DD_SC_NM"].as<string>();
