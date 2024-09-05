@@ -42,38 +42,44 @@ Calendar::Calendar() {
 
 Calendar::~Calendar() {};
 
-void Calendar::run(int day, int week) {
+void Calendar::run(int day, int month) {
     val row = window["row"];
-    int month = window["month"].as<int>();
     string classTd = "";
     string className = "";
+    int week = fristWeek, date = 0;
 
-    int x = day/7;
-    string* table = &calendar_table[x][week];
-    if(*table == "<td></td>") {
-        table = &calendar_table[++x][week];
-    }
-
-    string EVENT_NM = row["EVENT_NM"].as<string>();
-    string SBTR_DD_SC_NM = row["SBTR_DD_SC_NM"].as<string>();
-    if(SBTR_DD_SC_NM != "해당없음") {
-        className = "holiday";
-    }
+    for(int i=0; i < 5; i++) {
+        for(int j=week; j <= 7; j++) {
+            date++;
+            if(date == day) {
+                string* table = &calendar_table[i][j];
+                string EVENT_NM = row["EVENT_NM"].as<string>();
+                string SBTR_DD_SC_NM = row["SBTR_DD_SC_NM"].as<string>();
+                if(SBTR_DD_SC_NM != "해당없음") {
+                    className = "holiday";
+                }
     
-    if(EVENT_NM == "토요휴업일") {
-        EVENT_NM = "";
-    }
+                if(EVENT_NM == "토요휴업일") {
+                    EVENT_NM = "주말";
+                }
 
-    if(nowDay == day && month == now_month) {
-        classTd = "current-day";
+                if(nowDay == day && month == now_month) {
+                    classTd = "current-day";
+                }
+
+                *table = "<td class='"+classTd+"'>\
+                    <div class='day'>\
+                        <p class='day_p "+className+"'>"+to_string(day)+"</p>"+
+                        EVENT_NM+"<br>"+row["EVENT_CNTNT"].as<string>()+
+                    "</div>\
+                </td>";
+                return;
+            }else {
+                week = 1;
+            }
+        }
     }
-                
-    *table = "<td class='"+classTd+"'>\
-        <div class='day'>\
-            <p class='day_p "+className+"'>"+to_string(day)+"</p>"+
-            EVENT_NM+"<br>"+row["EVENT_CNTNT"].as<string>()+
-        "</div>\
-    </td>";
+    cout << "에러 (날짜를 찾지 못함)" << endl;
 }
 
 char* Calendar::get() {

@@ -19,6 +19,6 @@ class Calendar {
         Calendar();
         ~Calendar();
 
-        void run(int day, int week);
+        void run(int day, int month);
         char* get();
 };

@@ -25,7 +25,7 @@ export const assembly = {
     init: (op:number) => {},
     time_push: (itrt:string, x:number, y:number, class_time:number) => {},
     getTimetable: () => "",
-    calendar_push: (day:number, week:number) => {},
+    calendar_push: (day:number, month:number) => {},
     getCalendar: () => ""
 };
 

@@ -20,8 +20,8 @@ extern "C" {
         return timetable->get();
     }
 
-    void calendar_push(int day, int week) {
-        calendar->run(day, week);
+    void calendar_push(int day, int month) {
+        calendar->run(day, month);
     }
 
     char* getCalendar() {

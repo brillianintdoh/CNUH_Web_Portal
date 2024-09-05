@@ -24,7 +24,7 @@ export async function calendar() {
             if(Number(month_str) == month) {
                 (window as any).row = row;
                 const date = new Date(year +"-"+ month_str +"-"+ day);
-                assembly.calendar_push(date.getDate(), date.getDay()+1);
+                assembly.calendar_push(date.getDate(), month);
             }
         });
 
