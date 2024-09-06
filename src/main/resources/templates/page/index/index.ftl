@@ -4,8 +4,10 @@
         <title> 충대부고 웹 포털 </title>
         <meta charset="UTF-8">
         <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <script src="/js/boot.js"></script>
+        <link rel="manifest" href="/manifest.webmanifest">
+        <link rel="apple-touch-icon" href="/img/icon.png">
         <link rel="icon" href="/img/icon.png">
+        <script src="/js/boot.js"></script>
         <link rel="stylesheet" href="/css/index.css">
     </head>
     <body>

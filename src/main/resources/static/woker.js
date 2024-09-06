@@ -41,3 +41,24 @@ self.addEventListener('notificationclick', event => {
         })
     );
 });
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open('app_pwa').then(cache => {
+      return cache.addAll([
+        '/',
+        '/js/boot.js',
+        '/css/index.css',
+        "/img/icon.png",
+      ]);
+    })
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
+  );
+});

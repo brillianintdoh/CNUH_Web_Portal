@@ -7,11 +7,13 @@ import { chat, chat_htmx } from "./page/chat";
 import { community } from "./page/community";
 import { materials } from "./page/materials";
 import { calendar } from "./page/calendar";
+import { index } from "./page/index";
 interface EmscriptenModule {
     cwrap: (name: string, returnType: string | null, argTypes: string[]) => (...args: any[]) => any;
     onRuntimeInitialized: () => void;
 }
 declare const Module: EmscriptenModule;
+const index_page = document.getElementById("index_page") as HTMLElement;
 const login_page = document.getElementById("login_page") as HTMLElement;
 const account_page = document.getElementById("account_page") as HTMLElement;
 const timetable_page = document.getElementById("materials_page") as HTMLElement;
@@ -28,6 +30,10 @@ export const assembly = {
     calendar_push: (date:number, month:number) => {},
     getCalendar: () => ""
 };
+
+window.addEventListener('beforeinstallprompt', (event) => {
+    (window as any).appInstall = event;
+});
 
 document.addEventListener("DOMContentLoaded", () => {
     if(plugin_on) {
@@ -48,7 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 var load_is = true;
 async function DOM_load() {
-    if(login_page) {
+    if(index_page) {
+        index();
+    }else if(login_page) {
         await login();
     }else if(timetable_page) {
         await materials();

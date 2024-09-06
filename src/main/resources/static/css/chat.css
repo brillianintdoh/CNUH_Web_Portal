@@ -54,9 +54,9 @@ html, body {
 }
 
 .message {
-    max-width: 70%;
     padding: 8px 12px;
     border-radius: 20px;
+    white-space: pre-wrap;
     word-wrap: break-word;
 }
 
