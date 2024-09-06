@@ -15,6 +15,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ourgram.cberi.app_cberi.security.db.DBGet;
 import ourgram.cberi.app_cberi.security.db.DBUser;
 
+@SuppressWarnings("null")
 @Component
 public class Websocket extends TextWebSocketHandler {
     private Set<WebSocketSession> client = Collections.synchronizedSet(new HashSet<>());

@@ -47,12 +47,12 @@ void Calendar::run(int date, int month) {
             if(*table == "<td></td>") continue;
 
             day++;
-            if(day == date) {
-                is = 1;
-                classTd = "";
-            }else if(day == nowDay && month == now_month) {
+            if(day == nowDay && month == now_month) {
                 is = 2;
                 classTd = "current-day";
+            }else if(day == date) {
+                is = 1;
+                classTd = "";
             }
 
             if(is) {
