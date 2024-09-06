@@ -1,12 +1,11 @@
 
 export function index() {
     const appBtn = document.getElementById("appBtn_install") as HTMLElement;
-    const match = window.matchMedia('(display-mode: standalone)');
+    const app_install = (window as any).appInstall as Window;
 
-    if(!match.matches) {
+    if(app_install) {
         appBtn.style.display = 'block';
         appBtn.addEventListener("click", () => {
-            const app_install = (window as any).appInstall as Window;
             if(app_install) {
                 app_install.prompt();
             }else {
