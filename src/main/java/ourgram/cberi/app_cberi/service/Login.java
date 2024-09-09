@@ -87,7 +87,7 @@ public class Login {
 
         if(password.equalsIgnoreCase(confirm_password) && !grade.equals("null") && !class_nm.equals("null")) {
             if(!get.isUser(username)) {
-                user.singup(username, password);
+                user.singup(username, password, req.getRemoteAddr());
                 String id = user.getID(username);
                 edit.setSingup(id, name, grade, class_nm, seat, email);
                 result = "<script>alert('가입 성공'); location.replace('/');</script>";
@@ -109,7 +109,7 @@ public class Login {
             String email = req.getParameter("email");
 
             if(!get.isUser(username)) {
-                user.singup(username, password);
+                user.singup(username, password, "선생님 계정 추가");
                 String teacher_id = user.getID(username);
                 edit.setTeacher(teacher_id, name, email);
                 result = "<script>alert('가입 성공'); location.reload();</script>";

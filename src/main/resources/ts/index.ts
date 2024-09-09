@@ -1,13 +1,12 @@
 import "./htmx.js";
 import "htmx.org/dist/ext/ws";
-import { removeClass } from "htmx.org";
+import { addClass, removeClass } from "htmx.org";
 import { account, account_htmx } from "./page/account";
 import { login, login_htmx } from "./page/login";
 import { chat, chat_htmx } from "./page/chat";
 import { community } from "./page/community";
 import { materials } from "./page/materials";
 import { calendar } from "./page/calendar";
-import { index } from "./page/index";
 interface EmscriptenModule {
     cwrap: (name: string, returnType: string | null, argTypes: string[]) => (...args: any[]) => any;
     onRuntimeInitialized: () => void;
@@ -32,7 +31,27 @@ export const assembly = {
 };
 
 window.addEventListener('beforeinstallprompt', (event) => {
-    (window as any).appInstall = event;
+    if(index_page) {
+        const appBtn = document.getElementById("appBtn_install") as HTMLLinkElement;
+        if(event) {
+            appBtn.style.visibility = "visible";
+            addClass(appBtn, "btn_a");
+        }
+
+        appBtn.addEventListener("click", () => {
+            if(event) {
+                (event as any).prompt();
+            }else {
+                if(isIOS()) {
+                    alert("ios 기기는 설치 방법이 다릅니다");
+                    appBtn.innerHTML = "ios 설치 방법";
+                    appBtn.href = "https://jeon0160.tistory.com/79";
+                }else {
+                    alert("현재 사용자님의 브라우저는 PWA를 지원하지 않습니다");
+                }
+            }
+        });
+    }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -54,9 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 var load_is = true;
 async function DOM_load() {
-    if(index_page) {
-        index();
-    }else if(login_page) {
+    if(login_page) {
         await login();
     }else if(timetable_page) {
         await materials();
@@ -75,6 +92,10 @@ async function DOM_load() {
         removeClass(document.body, "load_on");
         load.style.display = 'none';
     }
+}
+
+export function isIOS() {
+    return /iPhone|iPad|iPod/i.test(navigator.userAgent)
 }
 
 document.addEventListener("htmx:afterSettle", (evt:any) => {

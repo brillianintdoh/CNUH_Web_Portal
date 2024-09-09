@@ -47,9 +47,10 @@ self.addEventListener('install', event => {
     caches.open('app_pwa').then(cache => {
       return cache.addAll([
         '/',
-        '/js/boot.js',
-        '/css/index.css',
+        '/css/index.css',"/css/account.css","/css/calendar.css","/css/chat.css","/css/community.css","/css/login.css","/css/materials.css","/css/signup.css",
         "/img/icon.png",
+        '/js/boot.js',
+        "/plugin/index.js",
       ]);
     })
   );

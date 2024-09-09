@@ -53,7 +53,7 @@ void TimeTable::run(char* itrt, int x, int y, int class_time) {
         string check = my_time[itrt];
 
         if(node_find(check)) {
-            time_table[xyz[check].second][xyz[check].first] = "<td>"+string(itrt)+"</td>";
+            time_table[xyz[check].second][xyz[check].first] = "<td>"+string(itrt)+" ("+check+")</td>";
         }
     }
 }

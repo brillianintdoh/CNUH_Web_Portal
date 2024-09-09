@@ -1,9 +1,14 @@
 import { addClass, removeClass } from "htmx.org";
+import { isIOS } from "../../..";
 
 export async function page_2() {
+    if(isIOS() && !window.matchMedia('(display-mode: standalone)').matches) {
+    }
+
     if (window.Notification) {
         Notification.requestPermission();
     }
+
     const chat = (window as any).chat == 'true' ? true : false;
     const news = (window as any).news == "true" ? true : false;
     const mission = (window as any).mission == "true" ? true : false;
