@@ -29,7 +29,7 @@
 
 <br>
 
-# 프로젝트 요소
+## 프로젝트 요소
 
 ## WebAssembly 사용
 - WebAssembly는 애플리케이션의 성능을 향상시키기 위해 사용되었습니다
@@ -89,6 +89,8 @@ if(my_time.find(itrt) != my_time.end()) { // 과목명이 자신의 선택과목
 # 🏭 시스템
 <div align="center">
     <img src="./diagram/img/System.png" width="900">
+    <br>
+    <img src="./diagram/img/User.png" width="500">
 </div>
 
 <br>
