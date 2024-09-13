@@ -1,16 +1,28 @@
 @startuml User
-mainframe 유저
-actor user
-card "메인 페이지" as main
-rectangle "if(토큰 여부)" as toke_is
-collections "메뉴 바" as menu
+title 충북대사범대학부설고등학교 웹포털 사용자 흐름
 
-[user] --> (toke_is) : 접속
+actor "사용자" as user
 
-toke_is O--> main : O
-[로그인 페이지] <-O toke_is : X
-[회원가입 페이지] <- [로그인 페이지] : "회원가입 버튼을 눌렀을 경우"
+rectangle "웹포털" {
+    card "메인 페이지" as main
+    rectangle "토큰 확인" as token_check
+    collections "메뉴 바" as menu
+    card "로그인 페이지" as login
+    card "회원가입 페이지" as register
+    card "계정 설정 페이지" as account_settings
+    card "학사일정 페이지" as calendar_page
+    card "우리학교 정보 페이지" as materials_page
+}
 
-main <--> menu : 이동
-menu -> [계정 설정]
+user --> token_check : 접속
+
+token_check --> main : 토큰 있음
+token_check --> login : 토큰 없음
+
+login --> register : 회원가입 버튼 클릭
+main <--> menu : 메뉴 이동
+menu --> account_settings : 계정 설정 클릭
+menu --> calendar_page : 학사일정 클릭
+menu --> materials_page : 우리학교 정보 클릭
+
 @enduml

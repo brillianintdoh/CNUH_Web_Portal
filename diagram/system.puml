@@ -3,27 +3,38 @@ title 충북대사범대학부설고등학교 웹포털 사이트 구조
 
 package "웹포털 사이트" {
     cloud "사용자 인터페이스" as UI {
-        RECTANGLE "HTML"
-        RECTANGLE "CSS"
-        RECTANGLE "TypeScript(JavaScript)"
-        RECTANGLE "Bootstrap"
-        RECTANGLE "htmx"
+        RECTANGLE "HTML" as HTML
+        RECTANGLE "CSS" as CSS
+        RECTANGLE "TypeScript(JavaScript)" as TypeScript
+        RECTANGLE "Bootstrap" as Bootstrap
+        RECTANGLE "htmx" as htmx
+
+        HTML -[#0000FF]-> CSS : 스타일 정의
+        CSS -[#0000FF]-> TypeScript : 동적 기능 추가
+        TypeScript -[#0000FF]-> Bootstrap : 반응형 디자인 구현
+        TypeScript -[#0000FF]-> htmx : 동적 기능 추가
     }
 
     rectangle "백엔드" as Backend {
-        RECTANGLE "Spring Boot" {
-            RECTANGLE "freemarker"
-            RECTANGLE "WebSocket"
-            RECTANGLE "로그인 시스템"
+        RECTANGLE "Spring Boot" as SpringBoot {
+            RECTANGLE "freemarker" as Freemarker
+            RECTANGLE "WebSocket" as WebSocket
+            RECTANGLE "로그인 시스템" as LoginSystem
+
+            Freemarker -[#0000FF]-> HTML : 동적 HTML 생성
+            WebSocket -[#0000FF]-> UI : 실시간 통신
+            LoginSystem -[#0000FF]-> UI : 사용자 인증 및 권한 부여
         }
+
+        RECTANGLE "Java" as Java
     }
 
     database "데이터베이스" as Database {
-        RECTANGLE "MySQL"
+        RECTANGLE "MySQL" as MySQL
     }
 
     rectangle "기타 기술" as OtherTech {
-        RECTANGLE "WebAssembly"
+        RECTANGLE "WebAssembly" as WebAssembly
     }
 }
 
@@ -35,19 +46,23 @@ Backend -[#0000FF]-> UI : 응답
 UI -[#FF0000]-> Backend : 채팅 요청
 Backend -[#FF0000]-> UI : 채팅 응답
 
-note right of UI
-   사용자 인터페이스는 웹 페이지를 통해 사용자와 상호작용합니다.
-end note
+package "캘린더 시스템" {
+    rectangle "calendar.cpp" as CalendarCpp {
+        RECTANGLE "Calendar" as CalendarClass
+    }
 
-note right of Backend
-   Spring Boot를 사용하여 백엔드를 구축하고, WebSocket을 통해 실시간 채팅을 지원합니다.
-end note
+    CalendarClass -[#0000FF]-> UI : 캘린더 데이터 제공
+}
 
-note right of Database
-   MySQL 데이터베이스를 사용하여 사용자 정보와 채팅 데이터를 저장합니다.
-end note
+package "시간표 시스템" {
+    rectangle "timetable.cpp" as TimetableCpp {
+        RECTANGLE "TimeTable" as TimeTableClass
+    }
 
-note right of OtherTech
-   WebAssembly를 사용하여 웹 애플리케이션의 성능을 향상시킵니다.
-end note
+    TimeTableClass -[#0000FF]-> UI : 시간표 데이터 제공
+}
+
+Backend -[#0000FF]-> CalendarCpp : 캘린더 데이터 요청
+Backend -[#0000FF]-> TimetableCpp : 시간표 데이터 요청
+
 @enduml

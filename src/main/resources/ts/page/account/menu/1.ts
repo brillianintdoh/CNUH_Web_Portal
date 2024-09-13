@@ -20,6 +20,7 @@ export const change: { [key: string]: string } = {
     "통사": "통합사회",
     "고전": "고전 읽기",
     "지구": "지구과학",
+    "생한": "생활과 한문"
 }
 
 export async function page_1() {

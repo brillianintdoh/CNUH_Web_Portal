@@ -15,9 +15,9 @@ export async function materials() {
         return;
     }
 
+    const date = new Date();
     let meals_now = "";
     meals_json.mealServiceDietInfo[1].row.forEach((row) => {
-        const date = new Date();
         const month = row.MLSV_YMD.substring(4, 6);
         const day = row.MLSV_YMD.substring(6, 8);
 
