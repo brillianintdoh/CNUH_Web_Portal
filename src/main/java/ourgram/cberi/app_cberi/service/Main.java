@@ -52,4 +52,12 @@ public class Main {
         model.addAttribute("year", date.getYear());
         return "page/calendar/index";
     }
+
+    @GetMapping("/draw")
+    public String draw(Model model, @CookieValue(name="token", required=true) String token) {
+        String id = UserDB.getId(token);
+        model.addAttribute("class_nm", get.getClassNm(id));
+        model.addAttribute("right", get.isTeacher(id) ? true : get.isManager(id));
+        return "page/draw/index";
+    }
 }

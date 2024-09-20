@@ -1,0 +1,90 @@
+body {
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.classroom-container {
+    width: 100%;
+    height: 60rem;
+    overflow-x: auto;
+}
+
+.classroom-container::-webkit-scrollbar {
+    display: none;
+}
+
+.classroom {
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 1200px;
+    height: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+
+.desk {
+    width: 80px;
+    height: 60px;
+    background-color: #8B4513;
+    border: 2px solid #5D2E0C;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: absolute;
+    cursor: move;
+}
+
+.desk:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+}
+
+.teacher-desk {
+    width: 120px;
+    height: 80px;
+    background-color: #4A6D7C;
+    position: absolute;
+    top: 120px;
+    left: 340px;
+    cursor: default;
+}
+
+.blackboard {
+    height: 90px;
+    background-color: #2C3E50;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 20px;
+    left: 80px;
+    right: 80px;
+}
+
+.fullscreen-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+}
+
+.node_list {
+    position: relative;
+    left:50%;
+    transform: translateX(-50%);
+    width:50rem;
+    height:100%;
+}

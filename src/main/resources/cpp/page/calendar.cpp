@@ -21,7 +21,7 @@ Calendar::Calendar() {
             calendar_table[i][j] = "<td>\
                 <div class='day'>\
                     <p class='day_p "+className+"'>"+to_string(day)+"</p>"+
-                    EVENT_NM+"<br>"+
+                    EVENT_NM+
                 "</div>\
             </td>";
             day++;
@@ -48,6 +48,7 @@ void Calendar::run(int date, int month) {
 
             day++;
             if(day == nowDay && month == now_month) {
+                if(table->find("<br>") != string::npos) continue;
                 is = 2;
                 classTd = "current-day";
             }else if(day == date) {

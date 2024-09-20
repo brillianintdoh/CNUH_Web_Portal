@@ -10,8 +10,9 @@ rectangle "웹포털" {
     card "로그인 페이지" as login
     card "회원가입 페이지" as register
     card "계정 설정 페이지" as account_settings
-    card "학사일정 페이지" as calendar_page
-    card "우리학교 정보 페이지" as materials_page
+    card "시간표" as time_table {
+        card "과목" as subject_abbreviation
+    }
 }
 
 user --> token_check : 접속
@@ -22,7 +23,6 @@ token_check --> login : 토큰 없음
 login --> register : 회원가입 버튼 클릭
 main <--> menu : 메뉴 이동
 menu --> account_settings : 계정 설정 클릭
-menu --> calendar_page : 학사일정 클릭
-menu --> materials_page : 우리학교 정보 클릭
+menu --> time_table : 시간표 보기
 
 @enduml

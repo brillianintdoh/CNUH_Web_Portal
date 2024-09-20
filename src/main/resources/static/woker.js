@@ -16,7 +16,7 @@ self.addEventListener('push', event => {
         vibrate: true
     };
 
-    url = data.url || "/";
+    url = data.url ?? "/";
 
     event.waitUntil(
         self.registration.showNotification(data.title || 'No title', options)
@@ -46,8 +46,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open('app_pwa').then(cache => {
       return cache.addAll([
-        '/',
-        '/css/index.css',"/css/account.css","/css/calendar.css","/css/chat.css","/css/community.css","/css/login.css","/css/materials.css","/css/signup.css",
+        '/css/index.css',"/css/account.css","/css/calendar.css","/css/chat.css","/css/community.css","/css/login.css","/css/materials.css","/css/signup.css","/css/draw.css",
         "/img/icon.png",
         '/js/boot.js',
         "/plugin/index.js",

@@ -7,6 +7,7 @@ import { chat, chat_htmx } from "./page/chat";
 import { community } from "./page/community";
 import { materials } from "./page/materials";
 import { calendar } from "./page/calendar";
+import { draw } from "./page/draw";
 interface EmscriptenModule {
     cwrap: (name: string, returnType: string | null, argTypes: string[]) => (...args: any[]) => any;
     onRuntimeInitialized: () => void;
@@ -16,6 +17,7 @@ const index_page = document.getElementById("index_page") as HTMLElement;
 const login_page = document.getElementById("login_page") as HTMLElement;
 const account_page = document.getElementById("account_page") as HTMLElement;
 const timetable_page = document.getElementById("materials_page") as HTMLElement;
+const draw_page = document.getElementById("draw_page") as HTMLElement;
 const chat_page = document.getElementById("chat_page") as HTMLElement;
 const community_page = document.getElementById("community_page") as HTMLElement;
 const calendar_page = document.getElementById("calendar_page") as HTMLElement;
@@ -86,6 +88,8 @@ async function DOM_load() {
         community();
     }else if(calendar_page) {
         await calendar();
+    }else if(draw_page) {
+        draw();
     }
 
     if(load && load_is) {

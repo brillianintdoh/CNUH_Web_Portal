@@ -60,8 +60,9 @@ if(class_time == 1) { // 1반을 기준으로 잡는다
 
 if(my_time.find(itrt) != my_time.end()) { // 과목명이 자신의 선택과목인지 확인합니다
     string check = my_time[itrt]; // 맞다면 그 과목의 알파벳을 가져옵니다
+
     if(node_find(check)) { // 리스트에서 그 과목이 없다면 0(false)를 리턴하고 만약 있다면 xyz 변수에 좌표를 저장한후 1(true)를 리턴합니다
-        time_table[xyz[check].second][xyz[check].first] = "<td>"+string(itrt)+"</td>";
+        time_table[xyz[check].second][xyz[check].first] = "<td>"+string(itrt)+" ("+check+")</td>";
     }
 }
 ```

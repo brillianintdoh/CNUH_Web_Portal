@@ -31,7 +31,7 @@
                     <table class="calendar_table">
                         <thead>
                             <tr>
-                                <th class="holiday">일</th>
+                                <th style="color:red;">일</th>
                                 <th>월</th>
                                 <th>화</th>
                                 <th>수</th>
