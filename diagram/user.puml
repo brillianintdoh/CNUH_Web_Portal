@@ -11,7 +11,7 @@ rectangle "웹포털" {
     card "회원가입 페이지" as register
     card "계정 설정 페이지" as account_settings
     card "시간표" as time_table {
-        card "과목" as subject_abbreviation
+        card "시간표 및 급식표" as subject_abbreviation
     }
 }
 
