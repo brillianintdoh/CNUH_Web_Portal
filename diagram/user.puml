@@ -13,6 +13,8 @@ rectangle "웹포털" {
     card "시간표" as time_table {
         card "시간표 및 급식표" as subject_abbreviation
     }
+    card "학사일정 페이지" as calendar_page
+    card "자리 및 번호 배치 페이지" as draw_page
 }
 
 user --> token_check : 접속
@@ -24,5 +26,7 @@ login --> register : 회원가입 버튼 클릭
 main <--> menu : 메뉴 이동
 menu --> account_settings : 계정 설정 클릭
 menu --> time_table : 시간표 보기
+menu --> calendar_page : 학사일정 보기
+menu --> draw_page : 자리 배치 보기
 
 @enduml
