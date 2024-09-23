@@ -1,6 +1,8 @@
 package ourgram.cberi.app_cberi.service;
 
 import java.time.LocalDate;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,8 +58,17 @@ public class Main {
     @GetMapping("/draw")
     public String draw(Model model, @CookieValue(name="token", required=true) String token) {
         String id = UserDB.getId(token);
-        model.addAttribute("class_nm", get.getClassNm(id));
+        Map<String, Object> data = get.getClass_setting(get.getGrade(id), get.getClassNm(id));
+        boolean is_edit = false;
+        for(String edit_id : data.get("edit_id").toString().split(",")) {
+            if(id.equals(edit_id)) {
+                is_edit = true;
+                break;
+            }
+        }
+        model.addAttribute("data", data);
         model.addAttribute("right", get.isTeacher(id) ? true : get.isManager(id));
+        model.addAttribute("is_edit", is_edit);
         return "page/draw/index";
     }
 }

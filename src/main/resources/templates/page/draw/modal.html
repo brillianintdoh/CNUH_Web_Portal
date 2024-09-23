@@ -1,0 +1,64 @@
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">자리 배치 설정 및 사용법</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>자리 배치 설정</h5>
+                <p>자리 배치를 설정하려면, 자리 배치 화면에서 자리 배치를 원하는 위치에 클릭하면 됩니다.</p>
+                <h5>자리 수정</h5>
+                <p>자리의 번호를 수정하시려면 숫자를 클릭하면 수정하실수 있습니다</p>
+                <h5>자리 삭제</h5>
+                <p>자리를 삭제 하실려면 자리를 ctrl + click 하시면 됩니다</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Modal2" tabindex="-1" aria-labelledby="ModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel2">설정</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        범위 지정
+                        <div class="row">
+                            <div class="col-8 col-sm-6">
+                                <label for="range_min" class="form-label">최소 값</label>
+                                <input type="range" class="form-range" min="1" max="100" value="1" id="range_min" oninput="document.querySelector('label[for=\'range_min\']').innerHTML = '최소 값: '+this.value;">
+                            </div>
+                            <div class="col-4 col-sm-6">
+                                <label for="range_max" class="form-label">최대 값</label>
+                                <input type="range" class="form-range" min="1" max="100" value="100" id="range_max" oninput="document.querySelector('label[for=\'range_max\']').innerHTML = '최대 값: '+this.value;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 ms-auto"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-5 ms-auto" style="text-align: center;">제외할 숫자 입력 ,로 구분해서 입력</div>
+                </div>
+                <div class="row">
+                    <div class="col-5 ms-auto">
+                        <input type="text" id="exception_input" class="form-control" placeholder="제외할 숫자를 입력하세요 ,로 구분" oninput="this.value = this.value.replace(/[^0-9,]/g, '');">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
