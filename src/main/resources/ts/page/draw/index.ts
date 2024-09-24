@@ -165,22 +165,31 @@ export function draw() {
         is_shaking = true;
         const min = Number(range_min.value);
         const max = Number(range_max.value);
-        console.log(max);
 
         shake();
         setTimeout(() => {
             is_shaking = false;
             let exception:number[] = [];
-            exception_input.value.split(",").forEach((num) => {
-                exception.push(Number(num));
+            exception_input.value.split(",").forEach((str) => {
+                if(!str) return;
+                const num = Number(str);
+                if(num >= min && num <= max) {
+                    (deskData[num].querySelector(".node_input") as HTMLInputElement).value = "";
+                    exception.push(num);
+                }else {
+                    alert("예외 숫자중 범위를 벗어난 숫자가 있습니다");
+                    isRandom = false;
+                    return;
+                }
             });
+            (window as any).e = exception;
 
             function change() {
+                if(!isRandom) return;
                 let index = Math.floor(Math.random() * max) + min;
                 while(exception.includes(index)) {
                     index = Math.floor(Math.random() * max) + min;
                 }
-                const node_input = deskData[index].querySelector(".node_input") as HTMLInputElement;
 
                 let i = 0, random = Math.floor(Math.random() * max) + min;
                 while(index == random && exception.includes(i) && i < 100) {
@@ -189,8 +198,8 @@ export function draw() {
                 }
                 setTimeout(() => {
                     if(i >= 100) {
+                        const node_input = deskData[index].querySelector(".node_input") as HTMLInputElement;
                         node_input.value = "";
-                        exception.push(index);
                     }else {
                         const left = deskData[index].style.left;
                         const top = deskData[index].style.top;
@@ -200,12 +209,16 @@ export function draw() {
                         deskData[random].style.top = top;
                         exception.push(index);
                     }
-                    if(exception.length < max) change();
+
+                    if(exception.length < max) {
+                        change();
+                    }else {
+                        isRandom = false;
+                    }
                 }, 500);
             }
             change();
 
-            isRandom = false;
             fullscreenBtn.style.opacity = "1";
         }, 5000);
     });
