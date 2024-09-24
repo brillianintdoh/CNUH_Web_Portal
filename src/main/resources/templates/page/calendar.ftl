@@ -49,7 +49,7 @@
             <button class="exit-button" onclick="location.href='/'">페이지 나가기</button>
         </main>
 
-        <#include "/page/load.ftl" encoding="UTF-8"/>
+        <#include "/load.ftl" encoding="UTF-8"/>
         <script src="/plugin/index.js" id="plugin_on"></script>
         <script src="/js/index.js"></script>
     </body>

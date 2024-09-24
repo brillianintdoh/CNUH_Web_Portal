@@ -28,7 +28,7 @@
             </div>
         </div>
         <#assign page="1"/>
-        <#include "/page/load.ftl" encoding="UTF-8"/>
+        <#include "/load.ftl" encoding="UTF-8"/>
         <script src="/js/index.js"></script>
     </body>
 </html>

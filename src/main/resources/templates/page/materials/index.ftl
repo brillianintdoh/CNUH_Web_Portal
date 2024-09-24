@@ -12,7 +12,7 @@
         <main id="materials_page">
             <#include "main.html" encoding="UTF-8"/>
         </main>
-        <#include "/page/load.ftl" encoding="UTF-8"/>
+        <#include "/load.ftl" encoding="UTF-8"/>
 
         <#list timetable?keys as key>
             <script>

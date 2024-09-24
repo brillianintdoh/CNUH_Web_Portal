@@ -56,4 +56,4 @@
 </div>
 
 <#include "/page/account/user/modal.html" encoding="UTF-8"/>
-<#include "/page/load.ftl" encoding="UTF-8"/>
+<#include "/load.ftl" encoding="UTF-8"/>

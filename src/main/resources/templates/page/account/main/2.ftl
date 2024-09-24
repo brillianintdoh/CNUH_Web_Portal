@@ -61,7 +61,7 @@
     </div>
 </div>
 
-<#include "/page/load.ftl" encoding="UTF-8"/>
+<#include "/load.ftl" encoding="UTF-8"/>
 
 <script>
     window.publicKey = "${publicKey}";
