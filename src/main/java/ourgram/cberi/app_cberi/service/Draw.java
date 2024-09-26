@@ -18,7 +18,10 @@ public class Draw {
     private DBGet get;
 
     @GetMapping("")
-    public String index() {
+    public String index(Model model, @CookieValue(name="token", required=true) String token) {
+        String id = UserDB.getId(token);
+        Map<String, Object> data = get.getClass_setting(get.getGrade(id), get.getClassNm(id));
+        model.addAttribute("seating", data.get("seating"));
         return "page/draw/index";
     }
 

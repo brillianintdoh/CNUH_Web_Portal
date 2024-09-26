@@ -8,8 +8,8 @@
         <link rel="stylesheet" href="/css/draw.css">
         <script src="/js/boot.js"></script>
     </head>
-    <body>
-        <main id="draw_page">
+    <body id="draw_page">
+        <main id="seating_page">
             <div class="container">
                 <h1 class="text-center mb-4">${data['grade']}학년 ${data['class_nm']}반 자리 배치</h1>
                 <#if right || is_edit>
