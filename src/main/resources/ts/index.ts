@@ -1,6 +1,7 @@
 import "./htmx.js";
 import "htmx.org/dist/ext/ws";
 import { addClass, removeClass } from "htmx.org";
+import { gsap } from "gsap";
 import { account, account_htmx } from "./page/account";
 import { login, login_htmx } from "./page/login";
 import { chat, chat_htmx } from "./page/chat";
@@ -75,7 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 var load_is = true;
 async function DOM_load() {
-    if(login_page) {
+    if(index_page) {
+        gsap.fromTo(".head_menu", {opacity: 0, y: -50}, {opacity: 1, y: 0, duration: 0.5});
+    }else if(login_page) {
         await login();
     }else if(timetable_page) {
         await materials();
@@ -94,7 +97,7 @@ async function DOM_load() {
 
     if(load && load_is) {
         removeClass(document.body, "load_on");
-        load.style.display = 'none';
+        gsap.fromTo(load, {opacity: 1}, {opacity: 0, duration: 1, display: "none"});
     }
 }
 

@@ -1,4 +1,5 @@
 import { removeClass, toggleClass } from "htmx.org";
+import { gsap } from "gsap";
 import { page_1 } from "./menu/1";
 import { page_2 } from "./menu/2";
 import { page_3 } from "./menu/3";
@@ -39,8 +40,7 @@ export async function account_htmx(evt_documnet:HTMLElement) {
             admin();
         }
         
-        load = document.getElementById("load_"+p) as HTMLElement
         removeClass(document.body, "load_on");
-        load.style.display = 'none';
+        gsap.fromTo("load_"+p, {opacity: 1}, {opacity: 0, duration: 1, display: "none"});
     }
 }
