@@ -4,23 +4,33 @@ import { page_1 } from "./menu/1";
 import { page_2 } from "./menu/2";
 import { page_3 } from "./menu/3";
 import { admin } from "./menu/admin";
-var page_now:HTMLElement;
+var page_btn:HTMLElement;
 
 export async function account() {
-    page_now = document.getElementById("defualt_page") as HTMLElement;
+    page_btn = document.getElementById("defualt_page") as HTMLElement;
     function menu(evt:any) {
         const btn = evt.target as HTMLElement;
-        if(btn == page_now) return;
-        const nm = btn.getAttribute("page");
-        const page_nm = page_now.getAttribute("page");
-        const page = document.getElementById("page_"+page_nm) as HTMLElement;
-        page.style.display = 'none';
-        (document.getElementById("page_"+nm) as HTMLElement).style.display = 'block';
+        if(btn == page_btn) return;
+        const nm = Number(btn.getAttribute("page"));
+        const page_nm = Number(page_btn.getAttribute("page"));
+
+        const page_now = document.getElementById("page_"+page_nm) as HTMLElement;
+        const page = document.getElementById("page_"+nm) as HTMLElement;
+        if(page_nm < nm) {
+            gsap.to(page_now, { opacity: 0, duration: 0.5, x:1000, display:"none", onComplete: () => {
+                page.style.display = "block";
+            }});
+        }else {
+            gsap.fromTo(page, { opacity:0, display: "block", x:1000 }, { opacity: 1, duration: 1, x:0, onComplete: () => {
+                page_now.style.display = "none";
+            }});
+        }
+
 
         toggleClass(btn, "opacity-50");
-        toggleClass(page_now, "opacity-50");
+        toggleClass(page_btn, "opacity-50");
 
-        page_now = btn;
+        page_btn = btn;
     }
 
     (window as any).menu = menu;
@@ -28,7 +38,6 @@ export async function account() {
 
 export async function account_htmx(evt_documnet:HTMLElement) {
     const p = evt_documnet.getAttribute("page");
-    var load:HTMLElement = document.body;
     if(p) {
         if(p == "1") {
             await page_1();
@@ -41,6 +50,6 @@ export async function account_htmx(evt_documnet:HTMLElement) {
         }
         
         removeClass(document.body, "load_on");
-        gsap.fromTo("load_"+p, {opacity: 1}, {opacity: 0, duration: 1, display: "none"});
+        gsap.fromTo("#load_"+p, {opacity: 1}, {opacity: 0, duration: 1, display: "none"});
     }
 }

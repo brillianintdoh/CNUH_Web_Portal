@@ -32,27 +32,24 @@ export const assembly = {
     calendar_push: (date:number, month:number) => {},
     getCalendar: () => ""
 };
+function iosPwa() {
+    if(isIOS()) {
+        alert("ios 기기는 설치 방법이 다릅니다");
+        appBtn.innerHTML = "ios 설치 방법";
+        appBtn.href = "https://jeon0160.tistory.com/79";
+    }
+}
 
+const appBtn = document.getElementById("appBtn_install") as HTMLLinkElement;
 window.addEventListener('beforeinstallprompt', (event) => {
     if(index_page) {
-        const appBtn = document.getElementById("appBtn_install") as HTMLLinkElement;
         if(event) {
             appBtn.style.visibility = "visible";
             addClass(appBtn, "btn_a");
         }
-
+        appBtn.removeEventListener("click", iosPwa);
         appBtn.addEventListener("click", () => {
-            if(event) {
-                (event as any).prompt();
-            }else {
-                if(isIOS()) {
-                    alert("ios 기기는 설치 방법이 다릅니다");
-                    appBtn.innerHTML = "ios 설치 방법";
-                    appBtn.href = "https://jeon0160.tistory.com/79";
-                }else {
-                    alert("현재 사용자님의 브라우저는 PWA를 지원하지 않습니다");
-                }
-            }
+            (event as any).prompt();
         });
     }
 });
@@ -78,6 +75,7 @@ var load_is = true;
 async function DOM_load() {
     if(index_page) {
         gsap.fromTo(".head_menu", {opacity: 0, y: -50}, {opacity: 1, y: 0, duration: 0.5});
+        appBtn.addEventListener("click", iosPwa);
     }else if(login_page) {
         await login();
     }else if(timetable_page) {
