@@ -1,6 +1,8 @@
 package ourgram.cberi.app_cberi.service;
 
 import java.io.IOException;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -120,6 +122,24 @@ public class Edit {
 
         edit.setPushSetting(id, news, chat, mission);
         result = "<script>alert('웹 푸시 설정 성공'); location.reload();</script>";
+        return new ResponseEntity<>(result, head, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/seating")
+    public ResponseEntity<String> seating(@RequestParam(name="seat_json", required=true) String json, @CookieValue(name="token", required=true) String token) {
+        String result = "<script>alert('자리 저장 실패')</script>";
+        HttpHeaders head = new HttpHeaders();
+        head.add("Content-Type", "text/html; charset=UTF-8");
+        String id = UserDB.getId(token);
+        String grade = get.getGrade(id);
+        String class_nm = get.getClassNm(id);
+        Map<String, Object> data = get.getClass_setting(grade, class_nm);
+
+        if(get.isSeating_edit(id, data.get("edit_id").toString().split(",")) || get.isManager(id) || get.isTeacher(id)) {
+            result = "<script>alert('자리 저장 완료')</script>";
+            edit.setSeating(grade, class_nm, json);
+        }
         return new ResponseEntity<>(result, head, HttpStatus.OK);
     }
 }

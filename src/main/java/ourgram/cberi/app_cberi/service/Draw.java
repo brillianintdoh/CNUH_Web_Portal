@@ -29,16 +29,9 @@ public class Draw {
     public String seating(Model model, @CookieValue(name="token", required=true) String token) {
         String id = UserDB.getId(token);
         Map<String, Object> data = get.getClass_setting(get.getGrade(id), get.getClassNm(id));
-        boolean is_edit = false;
-        for(String edit_id : data.get("edit_id").toString().split(",")) {
-            if(id.equals(edit_id)) {
-                is_edit = true;
-                break;
-            }
-        }
         model.addAttribute("data", data);
         model.addAttribute("right", get.isTeacher(id) ? true : get.isManager(id));
-        model.addAttribute("is_edit", is_edit);
+        model.addAttribute("is_edit", get.isSeating_edit(id, data.get("edit_id").toString().split(",")));
         return "page/draw/seating/index";
     }
 }

@@ -55,6 +55,7 @@
         <script>
             window.layoutJson = '${data["seating"]}';
         </script>
+        <div id="script"></div>
         <script src="/js/index.js"></script>
     </body>
 </html>

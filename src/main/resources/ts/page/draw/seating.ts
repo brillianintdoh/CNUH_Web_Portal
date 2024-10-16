@@ -1,4 +1,4 @@
-import { remove, toggleClass } from "htmx.org";
+import { ajax, remove, toggleClass } from "htmx.org";
         
 export function seating() {
     const saveButton = document.getElementById('saveButton') as HTMLButtonElement;
@@ -14,6 +14,7 @@ export function seating() {
     let dragged: HTMLElement | null = null;
     let deskCount = 0;
     let isFullscreen = false;
+    let isDrag_type = true;
 
     function init() {
         deskCount = 0;
@@ -40,7 +41,33 @@ export function seating() {
         print();
         location.reload();
     }
+
+    let btn_brk = document.getElementById("change_btn") as HTMLButtonElement;
+    function change_drag(evt:any, type:boolean) {
+        if(isDrag_type == type) return;
+        const btn = evt.target as HTMLButtonElement;
+        isDrag_type = type;
+        toggleClass(btn, "btn-danger");
+        toggleClass(btn, "btn-success");
+        toggleClass(btn_brk, "btn-success");
+        toggleClass(btn_brk, "btn-danger");
+        btn_brk = btn;
+
+        const desks = document.querySelectorAll('.desk:not(.teacher-desk)') as NodeListOf<HTMLElement>;
+        desks.forEach(desk => {
+            if(type) {
+                const input = desk.querySelector(".node_input") as HTMLInputElement;
+                desk.draggable = false;
+                input.draggable = true;
+            }else {
+                const input = desk.querySelector(".node_input") as HTMLInputElement;
+                desk.draggable = true;
+                input.draggable = false;
+            }
+        });
+    }
     (window as any).seating_print = seating_print;
+    (window as any).change_drag = change_drag;
 
     function addDesk(evt:any, left?: string, top?: string) {
         deskCount++;
@@ -52,8 +79,8 @@ export function seating() {
         newDesk.draggable = true;
         newDesk.innerHTML = "<input class='node_input' value='"+deskCount+"번' oninput=\"this.value = this.value.replace(/[^0-9]/g, '')+'번'\">";
 
-        newDesk.addEventListener("mousedown", (evt) => {
-            if(evt.ctrlKey) {
+        newDesk.addEventListener("keydown", (evt) => {
+            if(evt.key == "Delete" || evt.key == "Backspace") {
                 remove(newDesk);
             }
         });
@@ -85,19 +112,44 @@ export function seating() {
     
     node_list.addEventListener('drop', (e) => {
         e.preventDefault();
-        if (dragged && !dragged.classList.contains('teacher-desk')) {
-            const rect = node_list.getBoundingClientRect();
-            const x = e.clientX - rect.left - dragged.offsetWidth / 2;
-            const y = e.clientY - rect.top - dragged.offsetHeight / 2;
-            
-            const maxX = rect.width - dragged.offsetWidth;
-            const maxY = rect.height - dragged.offsetHeight;
-            dragged.style.left = `${Math.max(0, Math.min(x, maxX))}px`;
-            dragged.style.top = `${Math.max(0, Math.min(y, maxY))}px`;
+        if(!dragged) return;
+        if (isDrag_type && !dragged.classList.contains('teacher-desk')) {
+            dragged.style.left = (e.offsetX - (dragged.offsetWidth/2)) + "px";
+            dragged.style.top = (e.offsetY - (dragged.offsetHeight/2)) + "px";
+            setTimeout(() => {
+                const desks = document.querySelectorAll('.desk:not(.teacher-desk)') as NodeListOf<HTMLElement>;
+                for(const desk of desks) {
+                    if(desk == dragged) continue;
+                    if(!dragged) continue;
+                    if(isLapping(dragged, desk)) {
+                        dragged.style.left = (Number(desk.style.left.replace("px", "")) + 90) + "px";
+                        dragged.style.top = desk.style.top;
+                        break;
+                    }
+                }
+            },500);
+        }else if(!isDrag_type) {
+            const value = e.dataTransfer?.getData("value");
+            console.log(value);
+            if(value) {
+                (e.target as HTMLInputElement).value = value;
+            }
         }
     });
     
+    function isLapping(node1:HTMLElement, node2:HTMLElement) {
+        const rect1 = node1.getBoundingClientRect();
+        const rect2 = node2.getBoundingClientRect();
+        return (
+            rect1.right > rect2.left &&
+            rect1.left < rect2.right &&
+            rect1.bottom > rect2.top &&
+            rect1.top < rect2.bottom
+        );
+    }
+    
     saveButton.addEventListener('click', () => {
+        if(isRandom) return;
         const desks = document.querySelectorAll('.desk:not(.teacher-desk)') as NodeListOf<HTMLElement>;
         const seatingArrangement = Array.from(desks).map(desk => ({
             id: desk.textContent,
@@ -106,7 +158,12 @@ export function seating() {
         }));
         
         const jsonData = JSON.stringify(seatingArrangement);
-        (window as any).layoutJson = jsonData;
+        ajax("POST", "/service/edit/seating", {
+            values: {
+                seat_json: jsonData
+            },
+            target: document.getElementById("script") as HTMLElement
+        });
     });
     
     fullscreenBtn.addEventListener('click', () => {
@@ -148,7 +205,7 @@ export function seating() {
         shake_left();
     }
 
-    let isRandom = false;
+    var isRandom = false;
     randomBtn.addEventListener('click', () => {
         if(isRandom) return;
         if(!isFullscreen) fullscreenBtn.click();

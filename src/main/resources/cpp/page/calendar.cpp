@@ -11,6 +11,7 @@ Calendar::Calendar() {
     for(int i=0; i < 5; i++) {
         for(int j=week; j <= 7; j++) {
             string className = "";
+            string classTd = "";
             string EVENT_NM = "평일";
         
             if(j == 7 || j == 1) {
@@ -18,7 +19,11 @@ Calendar::Calendar() {
                 EVENT_NM = "주말";
             }
 
-            calendar_table[i][j] = "<td>\
+            if(nowDay == day) {
+                classTd = "current-day";
+            }
+
+            calendar_table[i][j] = "<td class='"+classTd+"'>\
                 <div class='day'>\
                     <p class='day_p "+className+"'>"+to_string(day)+"</p>"+
                     EVENT_NM+
