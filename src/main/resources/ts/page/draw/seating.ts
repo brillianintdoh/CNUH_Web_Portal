@@ -80,7 +80,7 @@ export function seating() {
         newDesk.innerHTML = "<input class='node_input' value='"+deskCount+"번' oninput=\"this.value = this.value.replace(/[^0-9]/g, '')+'번'\">";
 
         newDesk.addEventListener("keydown", (evt) => {
-            if(evt.key == "Delete" || evt.key == "Backspace") {
+            if(evt.key == "Delete") {
                 remove(newDesk);
             }
         });
