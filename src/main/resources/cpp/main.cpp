@@ -4,12 +4,12 @@ TimeTable* timetable;
 Calendar* calendar;
 
 extern "C" {
-    void init(int op) {
-        if(op == 1) {
-            timetable = new TimeTable();
-        }else if(op == 2) {
-            calendar = new Calendar();
-        }
+    void timetable_init() {
+        timetable = new TimeTable();
+    }
+
+    void calendar_init(int month) {
+        calendar = new Calendar(month);
     }
 
     void time_push(char* itrt, int x, int y, int class_time) {

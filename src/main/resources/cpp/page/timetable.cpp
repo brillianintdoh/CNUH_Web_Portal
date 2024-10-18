@@ -10,6 +10,15 @@ TimeTable::TimeTable() {
     this->check_abc["지구과학"] = "C";
     this->check_abc["세계사"] = "D";
 
+    this->default_time["통합사회"] = "1";
+    this->default_time["통합과학"] = "1";
+    this->default_time["미술"] = "1";
+    this->default_time["기술가정"] = "1";
+    this->default_time["과학탐구"] = "1";
+    this->default_time["진로"] = "1";
+    this->default_time["한국사"] = "1";
+    this->default_time["체육"] = "1";
+    this->default_time["국어"] = "1";
     this->default_time["수학"] = "1";
     this->default_time["문학"] = "1";
     this->default_time["영어"] = "1";

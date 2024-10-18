@@ -50,6 +50,9 @@
         </main>
 
         <#include "/load.ftl" encoding="UTF-8"/>
+        <script>
+            window.grade = "${grade}";
+        </script>
         <script src="/plugin/index.js" id="plugin_on"></script>
         <script src="/js/index.js"></script>
     </body>

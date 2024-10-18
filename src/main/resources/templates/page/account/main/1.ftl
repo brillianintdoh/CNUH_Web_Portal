@@ -40,15 +40,15 @@
     <hr class="my-4">
     
     <div class="row gy-3">
-        <div class="col-md-6">
-            <h4 class="mb-3">현재 선택과목:</h4>
-        </div>
-        
-        <div class="col-md-6">
-            <p style="font-size:13px;">시간표 기능 사용하시려면 이 설정을 해야합니다 원쪽 위부터 1,2,3,4 를 a,b,c,d 로 하시면 됩니다</p>
-        </div>
-
         <#if grade != "1"> 
+            <div class="col-md-6">
+                <h4 class="mb-3">현재 선택과목:</h4>
+            </div>
+
+            <div class="col-md-6">
+                <p style="font-size:13px;">시간표 기능 사용하시려면 이 설정을 해야합니다 원쪽 위부터 1,2,3,4 를 a,b,c,d 로 하시면 됩니다</p>
+            </div>
+
             <#list dropdown as n>
                 <#assign index = n?index+1 />
                 <div class="col-md-6">

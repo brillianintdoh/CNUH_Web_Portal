@@ -1,11 +1,12 @@
 #include "calendar.h"
 
-Calendar::Calendar() {
+Calendar::Calendar(int month) {
     window = val::global("window");
     int lastDay = window["lastDay"].as<int>();
     now_month = window["now_month"].as<int>();
     fristWeek = window["fristWeek"].as<int>();
     nowDay = window["nowDay"].as<int>();
+    grade = window["grade"].as<int>();
 
     int day = 1, week = fristWeek;
     for(int i=0; i < 5; i++) {
@@ -19,7 +20,7 @@ Calendar::Calendar() {
                 EVENT_NM = "주말";
             }
 
-            if(nowDay == day) {
+            if(nowDay == day && month == now_month) {
                 classTd = "current-day";
             }
 
@@ -42,6 +43,16 @@ Calendar::~Calendar() {};
 
 void Calendar::run(int date, int month) {
     val row = window["row"];
+    int is_event = 0;
+    if(grade == 1) {
+        is_event = row["ONE_GRADE_EVENT_YN"].as<string>() == "Y";
+    }else if(grade == 2) {
+        is_event = row["TW_GRADE_EVENT_YN"].as<string>() == "Y";
+    }else if(grade == 3) {
+        is_event = row["THREE_GRADE_EVENT_YN"].as<string>() == "Y";
+    }
+
+    if(!is_event) return;
     int week = fristWeek, day = 0, is = 0;
     string classTd, className, EVENT_NM, EVENT_CNTNT, SBTR_DD_SC_NM;
     string* table = NULL;

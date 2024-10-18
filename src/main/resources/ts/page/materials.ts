@@ -36,7 +36,7 @@ export async function materials() {
 
     (document.getElementById("default_btn") as HTMLButtonElement).click();
     
-    assembly.init(1);
+    assembly.timetable_init();
     time_json.자료147[grade].forEach((class_nm, c_in) => {
         if(!Array.isArray(class_nm)) return;
         class_nm.forEach((day, d_in) => {

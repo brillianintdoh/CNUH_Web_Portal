@@ -1,5 +1,6 @@
 import "./htmx.js";
 import "htmx.org/dist/ext/ws";
+import "htmx.org/dist/ext/loading-states";
 import { addClass, removeClass } from "htmx.org";
 import { gsap } from "gsap";
 import { account, account_htmx } from "./page/account";
@@ -26,7 +27,8 @@ const calendar_page = document.getElementById("calendar_page") as HTMLElement;
 const load = document.querySelector(".load_menu") as HTMLElement;
 const plugin_on = document.getElementById("plugin_on") as HTMLElement;
 export const assembly = {
-    init: (op:number) => {},
+    timetable_init: () => {},
+    calendar_init: (month:number) => {},
     time_push: (itrt:string, x:number, y:number, class_time:number) => {},
     getTimetable: () => "",
     calendar_push: (date:number, month:number) => {},
@@ -49,7 +51,11 @@ window.addEventListener('beforeinstallprompt', (event) => {
         }
         appBtn.removeEventListener("click", iosPwa);
         appBtn.addEventListener("click", () => {
-            (event as any).prompt();
+            if(event) {
+                (event as any).prompt();
+            }else {
+                alert("현재 브라우저에서 PWA를 지원하지 않습니다");
+            }
         });
     }
 });
@@ -57,11 +63,11 @@ window.addEventListener('beforeinstallprompt', (event) => {
 document.addEventListener("DOMContentLoaded", () => {
     if(plugin_on) {
         Module.onRuntimeInitialized = () => {
-            assembly.init = Module.cwrap("init", "void", ["number"]);
-
+            assembly.timetable_init = Module.cwrap("timetable_init", "void", []);
             assembly.time_push = Module.cwrap("time_push", "void", ["string", "number", "number", "number"]);
             assembly.getTimetable = Module.cwrap("getTimetable", "string", []);
 
+            assembly.calendar_init = Module.cwrap("calendar_init", "void", ["number"]);
             assembly.calendar_push = Module.cwrap("calendar_push", "void", ["number", "number"]);
             assembly.getCalendar = Module.cwrap("getCalendar", "string", []);
             DOM_load();
@@ -74,7 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
 var load_is = true;
 async function DOM_load() {
     if(index_page) {
+        localStorage.getItem
         gsap.fromTo(".head_menu", {opacity: 0, y: -50}, {opacity: 1, y: 0, duration: 0.5});
+        if(isIOS()) appBtn.style.visibility = "visible";
         appBtn.addEventListener("click", iosPwa);
     }else if(login_page) {
         await login();

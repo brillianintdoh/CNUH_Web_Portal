@@ -5,16 +5,18 @@ export async function calendar() {
     const date = new Date();
     const year = date.getFullYear();
     let su_month = date.getMonth()+1;
+    const grade = (window as any).grade as string;
 
     (window as any).nowDay = date.getDate();
     (window as any).now_month = su_month;
     (window as any).swap_calendar = swap_calendar;
+    (window as any).grade = Number(grade);
     (document.getElementById("calendarTable_"+su_month) as HTMLElement).innerHTML = getCalendar(su_month);
 
     function getCalendar(month:number) {
         (window as any).lastDay = new Date(year, month, 0).getDate();
         (window as any).fristWeek = new Date(year, month-1, 1).getDay()+1;
-        assembly.init(2);
+        assembly.calendar_init(month);
         
         json.SchoolSchedule[1].row.forEach((row) => {
             const month_str = row.AA_YMD.substring(4, 6);

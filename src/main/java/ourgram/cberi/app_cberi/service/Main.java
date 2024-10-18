@@ -47,7 +47,9 @@ public class Main {
 
     @GetMapping("/calendar")
     public String calendar(Model model, @CookieValue(name="token", required=true) String token) {
+        String id = UserDB.getId(token);
         LocalDate date = LocalDate.now();
+        model.addAttribute("grade", get.getGrade(id));
         model.addAttribute("month", date.getMonthValue());
         model.addAttribute("year", date.getYear());
         return "page/calendar";

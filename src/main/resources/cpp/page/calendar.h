@@ -8,7 +8,7 @@ using namespace emscripten;
 class Calendar {
     public:
         val window;
-        int nowDay, fristWeek, now_month;
+        int nowDay, fristWeek, now_month, grade;
         string calendar_table[5][9] = {
             {"<tr>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>", "<td></td>", "<td></td>", "</tr>"},
             {"<tr>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>", "<td></td>", "<td></td>", "</tr>"},
@@ -16,7 +16,7 @@ class Calendar {
             {"<tr>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>", "<td></td>", "<td></td>", "</tr>"},
             {"<tr>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>", "<td></td>", "<td></td>", "</tr>"}
         };
-        Calendar();
+        Calendar(int month);
         ~Calendar();
 
         void run(int date, int month);
