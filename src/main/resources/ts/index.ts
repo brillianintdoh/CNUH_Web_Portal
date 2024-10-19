@@ -1,6 +1,5 @@
 import "./htmx.js";
 import "htmx.org/dist/ext/ws";
-import "htmx.org/dist/ext/loading-states";
 import { addClass, removeClass } from "htmx.org";
 import { gsap } from "gsap";
 import { account, account_htmx } from "./page/account";

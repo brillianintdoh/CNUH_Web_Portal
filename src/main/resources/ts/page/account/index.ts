@@ -11,12 +11,12 @@ export async function account() {
     function menu(evt:any) {
         const btn = evt.target as HTMLElement;
         if(btn == page_btn) return;
-        const nm = Number(btn.getAttribute("page"));
-        const page_nm = Number(page_btn.getAttribute("page"));
+        const nm = btn.getAttribute("page")
+        const page_nm = page_btn.getAttribute("page");
 
         const page_now = document.getElementById("page_"+page_nm) as HTMLElement;
         const page = document.getElementById("page_"+nm) as HTMLElement;
-        if(page_nm < nm) {
+        if(page_now.compareDocumentPosition(page) == 4) {
             gsap.to(page_now, { opacity: 0, duration: 0.5, x:1000, display:"none", onComplete: () => {
                 page.style.display = "block";
             }});
