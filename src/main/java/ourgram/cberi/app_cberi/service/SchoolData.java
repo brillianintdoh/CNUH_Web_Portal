@@ -93,42 +93,21 @@ public class SchoolData {
     }
 
     private String[] getYear() {
-        LocalDate now = LocalDate.now();
-        int week = now.getDayOfWeek().getValue();
-        int month = now.getMonthValue();
-        int start_day, end_day;
-        if(week > 5) {
-            start_day = now.getDayOfMonth() + (7 % (week-1));
-            end_day = now.getDayOfMonth() + (4 + (7 % (week-1)));
-        }else {
-            start_day = (now.getDayOfMonth() - week)+1;
-            end_day = now.getDayOfMonth()+(5 - week);
-        }
+        LocalDate start = LocalDate.now();
+        int week = start.getDayOfWeek().getValue();
+        start = start.minusDays(week - 1);
+        LocalDate end = start.plusDays(7);
+        int month = start.getMonthValue();
+        int start_day = start.getDayOfMonth();
+        int end_day = end.getDayOfMonth();
+        String monthIS = month < 10 ? "0" : "";
+        String dayIs = start_day < 10 ? "0" : "";
 
-        int length = YearMonth.now().lengthOfMonth();
-        if(start_day > length) {
-            month++;
-            start_day = start_day - length;
-        }
+        String startYear = start.getYear() + ""+ monthIS + month + "" + dayIs + start_day;
 
-        if(end_day > length) {
-            end_day = end_day - length;
-        }
-
-        String dayIs = "";
-        String monthIS = "";
-        if(month < 10) {
-            monthIS = "0";
-        }
-        if(start_day < 10) {
-            dayIs = "0";
-        }
-
-        String startYear = now.getYear() + ""+ monthIS + month + "" + dayIs + start_day;
-        if(end_day >= 10) {
-            dayIs = "";
-        }
-        String endYear = now.getYear() + "" + monthIS + month + "" + dayIs + end_day;
+        dayIs = end_day < 10 ? "0" : "";
+        month = end.getMonthValue();
+        String endYear = end.getYear() + ""+ monthIS + month + "" + dayIs + end_day;
 
         return new String[]{startYear, endYear};
     }
